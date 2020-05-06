@@ -1,7 +1,8 @@
+dist: xenial
+
 language: java
 install: mvn install -DskipTests -Dgpg.skip
-jdk:
-  - oraclejdk8
+jdk: openjdk8
 sudo: false
 cache:
   directories:

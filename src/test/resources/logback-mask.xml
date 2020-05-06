@@ -9,13 +9,17 @@
                 <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - %m%n</pattern>
 
                 <mask>
-                    <pattern><![CDATA[(\d{6})\d{6}(\d{3,5}[xX]?)]]></pattern>
+                    <pattern><![CDATA[\d{12}\d{3,5}[xX]?]]></pattern>
+                    <keys>creditCard,id</keys>
+
                     <leftKeep>3</leftKeep>
                     <rightKeep>3</rightKeep>
                     <mask>***</mask>
+                    <boundary>true</boundary>
                 </mask>
                 <mask>
-                    <pattern><![CDATA[(\d)\d{3}(\d)]]></pattern>
+                    <pattern><![CDATA[\d{5}]]></pattern>
+                    <boundary>true</boundary>
                 </mask>
             </layout>
         </encoder>

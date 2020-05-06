@@ -6,8 +6,8 @@
         <param name="target" value="System.out"/>
         <layout class="cn.bjca.footstone.logmask.Log4jMaskLayout">
             <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p %C:%L - %m%n"/>
-            <param name="Masks" value="pattern=(\\d{6})\\d{6}(\\d{3,5}[xX]?) leftKeep=3 rightKeep=3 mask=***"/>
-            <param name="Masks" value="pattern=(\\d)\\d{3}(\\d)"/>
+            <param name="Masks" value="pattern=\\d{12}\\d{3,5}[xX]? leftKeep=3 rightKeep=3 mask=*** boundary=true"/>
+            <param name="Masks" value="pattern=\\d{5}"/>
         </layout>
     </appender>
 

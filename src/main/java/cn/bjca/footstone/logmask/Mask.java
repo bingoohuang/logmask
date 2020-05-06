@@ -8,19 +8,27 @@ import java.util.regex.Pattern;
 @Data
 public class Mask {
   private String pattern;
+  private String keys;
   private Pattern compiled;
 
   private int leftKeep;
   private int rightKeep;
   private String mask;
   private boolean keepMasksLength;
+  private boolean boundary;
 
   public Mask fix() {
     if (this.mask == null) {
-      this.mask = "*+*";
+      this.mask = "...";
     }
 
-    this.compiled = Pattern.compile(pattern, Pattern.MULTILINE);
+    if (this.pattern != null) {
+      String p = pattern;
+      if (boundary) {
+        p = "\\b" + pattern + "\\b";
+      }
+      this.compiled = Pattern.compile(p, Pattern.MULTILINE);
+    }
 
     return this;
   }
@@ -64,6 +72,8 @@ public class Mask {
       setMask(v);
     } else if (k.equals("keepMasksLength")) {
       setKeepMasksLength(Boolean.parseBoolean(v));
+    } else if (k.equals("boundary")) {
+      setBoundary(Boolean.parseBoolean(v));
     }
   }
 }
