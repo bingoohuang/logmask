@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <appender name="Console1" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="cn.bjca.footstone.logmask.LogbackMaskLayout">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - %m%n</pattern>
+
+                <mask>
+                    <pattern><![CDATA[(\d{6})\d{6}(\d{3,5}[xX]?)]]></pattern>
+                    <leftKeep>3</leftKeep>
+                    <rightKeep>3</rightKeep>
+                    <mask>***</mask>
+                </mask>
+                <mask>
+                    <pattern><![CDATA[(\d)\d{3}(\d)]]></pattern>
+                </mask>
+            </layout>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="Console1"/>
+    </root>
+
+</configuration>
