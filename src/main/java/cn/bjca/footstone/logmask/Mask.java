@@ -8,7 +8,6 @@ import java.util.regex.Pattern;
 @Data
 public class Mask {
   private String pattern;
-  private String keys;
   private Pattern compiled;
 
   private int leftKeep;
@@ -16,6 +15,7 @@ public class Mask {
   private String mask;
   private boolean keepMasksLength;
   private boolean boundary;
+  private String keys;
 
   public Mask fix() {
     if (this.mask == null) {
@@ -74,6 +74,8 @@ public class Mask {
       setKeepMasksLength(Boolean.parseBoolean(v));
     } else if (k.equals("boundary")) {
       setBoundary(Boolean.parseBoolean(v));
+    } else if (k.equals("keys")) {
+      setKeys(v);
     }
   }
 }
