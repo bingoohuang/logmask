@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
+    <conversionRule conversionWord="maskedMsg"
+                    converterClass="ph.samson.logback.luhn.LuhnMaskingConverter"/>
+
     <appender name="Console1" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
             <layout class="cn.bjca.footstone.logmask.LogbackMaskLayout">
