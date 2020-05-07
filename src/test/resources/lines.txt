@@ -1,0 +1,6 @@
+STR0: {"name":"bingoohuang","age":100,"address":"{\"city\":\"{\\\"name\\\":\\\"beijing\\\",\\\"capital\\\":\\\"beijing\\\",\\\"zoneCode\\\":10}\",\"postcode\":100100}"}
+OUT0: {"name":"*","age":100,"address":"{\"city\":\"{\\\"name\\\":\\\"*\\\",\\\"capital\\\":\\\"beijing\\\",\\\"zoneCode\\\":10}\",\"postcode\":100100}"}
+STR1: name:bingoohuang age:100
+OUT1: name:* age:100
+STR2: name:bingoohuang age:100
+OUT2: name:* age:100
