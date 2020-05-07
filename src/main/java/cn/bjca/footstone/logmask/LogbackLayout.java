@@ -7,7 +7,9 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogbackMaskLayout extends PatternLayout {
+public class LogbackLayout extends PatternLayout {
+  public static final ThreadLocal<List<Mask>> masksThreadLocal =
+      new InheritableThreadLocal<List<Mask>>();
   @Getter private final List<Mask> masks = new ArrayList<Mask>();
 
   public void addMask(Mask mask) {
@@ -15,7 +17,13 @@ public class LogbackMaskLayout extends PatternLayout {
   }
 
   @Override
+  public void start() {
+    masksThreadLocal.set(masks);
+    super.start();
+  }
+
+  @Override
   public String doLayout(ILoggingEvent event) {
-    return Masker.mask(masks, super.doLayout(event));
+    return super.doLayout(event);
   }
 }

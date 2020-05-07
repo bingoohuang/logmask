@@ -10,13 +10,20 @@ import org.apache.log4j.spi.LoggingEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Log4jMaskLayout extends PatternLayout {
+public class Log4jLayout extends PatternLayout {
   @Getter private String masks;
+  @Getter @Setter private String others;
   @Getter private List<Mask> parsed = new ArrayList<Mask>();
   @Getter @Setter private String separate = " ";
 
   public void setMasks(String mask) {
     this.parsed.add(parseMask(mask));
+  }
+
+  /** 所有的参数已经设置完毕后调用 */
+  @Override
+  public void activateOptions() {
+    super.activateOptions();
   }
 
   private Mask parseMask(String mask) {

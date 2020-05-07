@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
+    <conversionRule conversionWord="mask" converterClass="cn.bjca.footstone.logmask.LogbackConverter"/>
+
     <appender name="Console1" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
-            <layout class="cn.bjca.footstone.logmask.LogbackMaskLayout">
-                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - %m%n</pattern>
+            <layout class="cn.bjca.footstone.logmask.LogbackLayout">
+                <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - 脱敏后 %mask%n</pattern>
 
                 <mask>
                     <pattern><![CDATA[\d{12}\d{3,5}[xX]?]]></pattern>
@@ -23,13 +25,13 @@
     </appender>
     <appender name="Console2" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - %m%n</pattern>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - 脱敏前 %m%n</pattern>
         </encoder>
     </appender>
 
     <root level="INFO">
-        <appender-ref ref="Console1"/>
         <appender-ref ref="Console2"/>
+        <appender-ref ref="Console1"/>
     </root>
 
 </configuration>
