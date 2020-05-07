@@ -26,9 +26,9 @@ public class Slf4jMaskLayoutTest {
 
     log.info("Person2：{}", mapper.writeValueAsString(p));
 
-    val city = mapper.writeValueAsString(new Person.City("beijing", "beijing", 10));
+    val city = mapper.writeValueAsString(new Person.City("bei\\\":\\\"jing", "beijing", 10));
     val addr = mapper.writeValueAsString(new Person.Addr(city, 100100));
-    val bean = mapper.writeValueAsString(new Person.Bean("bingoohuang", 100, addr));
+    val bean = mapper.writeValueAsString(new Person.Bean("bingo\\\":\\\"ohuang", 100, addr));
     log.info("bean：{}", bean);
   }
 }
