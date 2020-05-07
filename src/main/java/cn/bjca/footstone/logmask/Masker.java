@@ -65,14 +65,10 @@ public class Masker {
         sb.append(rightChar);
 
         int valueEnd = src.indexOf(", ", next + key.length());
-        if (valueEnd > 0) {
-          String value = src.substring(next + key.length() + 1, valueEnd);
-          sb.append(mask.replace(value));
-          start = valueEnd;
-          continue;
+        if (valueEnd < 0) {
+          valueEnd = src.indexOf(")", next + key.length());
         }
 
-        valueEnd = src.indexOf(")", next + key.length());
         if (valueEnd > 0) {
           String value = src.substring(next + key.length() + 1, valueEnd);
           sb.append(mask.replace(value));
