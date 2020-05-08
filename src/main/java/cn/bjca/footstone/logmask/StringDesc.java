@@ -73,7 +73,7 @@ public class StringDesc {
                     + ")bean)."
                     + method
                     + "(), \""
-                    + d.type()
+                    + d.rule()
                     + "\"));");
           } else {
             strBuilder.append(

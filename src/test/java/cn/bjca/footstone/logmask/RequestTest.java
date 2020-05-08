@@ -26,16 +26,16 @@ public class RequestTest {
   @AllArgsConstructor
   @Mask
   public static class Request {
-    @Mask(type = "CARD")
+    @Mask(rule = "CARD")
     private String receiveCardNo;
 
-    @Mask(type = "MOBILE")
+    @Mask(rule = "MOBILE")
     private String mobNo;
 
-    @Mask(type = "EMAIL")
+    @Mask(rule = "EMAIL")
     private String email;
 
-    @Mask(type = "PASSWORD")
+    @Mask(rule = "PASSWORD")
     private String payPasswd;
   }
 }
