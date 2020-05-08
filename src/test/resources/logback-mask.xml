@@ -6,8 +6,6 @@
     <property name="PATTERN1"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} PATTERN1 %highlight(%-5level) [%boldYellow(%thread)] %boldGreen(%logger) : %boldYellow(%mask) %n"/>
     <property name="PATTERN2"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} PATTERN2 %highlight(%-5level) [%t] %logger : %m%n"/>
-    <property name="PATTERN3"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} PATTERN3 %highlight(%-5p) [%t] %cyan(%logger) : %m%n"/>
 
     <appender name="stdout1" class="ch.qos.logback.core.ConsoleAppender">
@@ -20,15 +18,9 @@
             <pattern>${PATTERN2}</pattern>
         </encoder>
     </appender>
-    <appender name="stdout3" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${PATTERN3}</pattern>
-        </encoder>
-    </appender>
 
     <root level="INFO">
         <appender-ref ref="stdout1"/>
         <appender-ref ref="stdout2"/>
-        <appender-ref ref="stdout3"/>
     </root>
 </configuration>
