@@ -17,6 +17,7 @@ public class MaskConfig {
 
   private int leftKeep;
   private int rightKeep;
+  private String keep;
   private String mask;
   private boolean keepMasksLength;
   private boolean boundary;
@@ -66,6 +67,18 @@ public class MaskConfig {
     return sb.toString();
   }
 
+  public void setKeep(String keep) {
+    val parts = keep.split(",");
+    if (parts.length == 1) {
+      int v = Integer.parseInt(parts[0]);
+      this.leftKeep = v;
+      this.rightKeep = v;
+    } else if (parts.length >= 2) {
+      this.leftKeep = Integer.parseInt(parts[0]);
+      this.rightKeep = Integer.parseInt(parts[1]);
+    }
+  }
+
   public void fulfil(String k, String v) {
     if (k.equals("pattern")) {
       setPattern(v);
@@ -73,6 +86,8 @@ public class MaskConfig {
       setLeftKeep(Integer.parseInt(v));
     } else if (k.equals("rightKeep")) {
       setRightKeep(Integer.parseInt(v));
+    } else if (k.equals("keep")) {
+      setKeep(v);
     } else if (k.equals("mask")) {
       setMask(v);
     } else if (k.equals("keepMasksLength")) {

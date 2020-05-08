@@ -11,8 +11,7 @@
                     <pattern><![CDATA[\d{12}\d{3,5}[xX]?]]></pattern>
                     <keys>creditCard id name</keys>
 
-                    <leftKeep>3</leftKeep>
-                    <rightKeep>3</rightKeep>
+                    <keep>3</keep>
                     <mask>***</mask>
                     <boundary>true</boundary>
                 </mask>
