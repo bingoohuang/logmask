@@ -8,9 +8,7 @@ import lombok.val;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -22,71 +20,62 @@ public class MaskMessageConverter extends MessageConverter {
   public String convert(ILoggingEvent event) {
     if (!isInit) {
       init();
+      isInit = true;
     }
 
     return doConvert(event);
   }
 
-  private void init() {
-    synchronized (MaskMessageConverter.class) {
-      rulesMap = new HashMap<String, RuleConfig>(10);
-      val propertyMap = ((LoggerContext) LoggerFactory.getILoggerFactory()).getCopyOfPropertyMap();
+  private synchronized void init() {
+    rulesMap = new HashMap<String, RuleConfig>(10);
+    val context = ((LoggerContext) LoggerFactory.getILoggerFactory()).getCopyOfPropertyMap();
 
-      for (Map.Entry<String, String> entry : propertyMap.entrySet()) {
-        String ruleName = entry.getKey();
-        String value = entry.getValue();
-        if (!ruleName.endsWith("_REG")) {
-          continue;
-        }
-
-        ruleName = ruleName.substring(0, ruleName.length() - "_REG".length());
-        String replace = propertyMap.get(ruleName + "_REPLACE");
-        if (replace == null) {
-          replace = "---";
-        }
-
-        rulesMap.put(ruleName, new RuleConfig(value, replace));
+    for (val entry : context.entrySet()) {
+      String rule = entry.getKey();
+      if (!rule.endsWith("_REG")) {
+        continue;
       }
-    }
 
-    isInit = true;
+      rule = rule.substring(0, rule.length() - "_REG".length());
+      String replace = context.get(rule + "_REPLACE");
+      if (replace == null) {
+        replace = "---";
+      }
+
+      rulesMap.put(rule, new RuleConfig(entry.getValue(), replace));
+    }
   }
 
   private String doConvert(ILoggingEvent e) {
-    Object[] arr = e.getArgumentArray();
-    if (arr != null && arr.length > 0) {
-      boolean maskMeRequired = false;
+    val arr = e.getArgumentArray();
+    if (arr == null) {
+      return e.getFormattedMessage();
+    }
 
-      for (Object obj : arr) {
-        if (obj.getClass().isAnnotationPresent(Mask.class)) {
-          maskMeRequired = true;
-          break;
-        }
-      }
-
-      if (maskMeRequired) {
-        return MessageFormatter.arrayFormat(e.getMessage(), mask(arr).toArray()).getMessage();
+    for (Object obj : arr) {
+      if (obj.getClass().isAnnotationPresent(Mask.class)) {
+        return MessageFormatter.arrayFormat(e.getMessage(), mask(arr)).getMessage();
       }
     }
 
     return e.getFormattedMessage();
   }
 
-  private List<Object> mask(Object[] argumentArray) {
-    val argumentList = new ArrayList<Object>();
+  private Object[] mask(Object[] argumentArray) {
+    val arguments = new Object[argumentArray.length];
 
-    for (Object obj : argumentArray) {
-      Class<?> aClass = obj.getClass();
-      val stringDesc = StringDesc.create(aClass);
-      if (stringDesc != null) {
-        stringDesc.setBean(obj);
-        stringDesc.setRulesMap(rulesMap);
-        argumentList.add(stringDesc);
-      } else {
-        argumentList.add(obj);
+    for (int i = 0; i < argumentArray.length; i++) {
+      Object obj = argumentArray[i];
+      val desc = ToString.create(obj.getClass());
+      if (desc != null) {
+        desc.setBean(obj);
+        desc.setRulesMap(rulesMap);
+        obj = desc;
       }
+
+      arguments[i] = obj;
     }
 
-    return argumentList;
+    return arguments;
   }
 }

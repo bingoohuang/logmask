@@ -9,5 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RuleConfig {
   private String reg;
-  private String replacement;
+  private String replace;
+
+  public String mask(String s) {
+    return s.replaceAll(reg, replace);
+  }
 }
