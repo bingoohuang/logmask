@@ -1,0 +1,22 @@
+<bean id="maskValueFilter" class="cn.bjca.footstone.logmask.MaskValueFilter"/>
+
+<mvc:message-converters register-defaults="true">
+<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+    <property name="supportedMediaTypes">
+        <list>
+            <!-- <value>text/html;charset=UTF-8</value> -->
+            <value>application/json</value>
+        </list>
+    </property>
+    <property name="features">
+        <list>
+            <value>WriteMapNullValue</value>
+            <value>QuoteFieldNames</value>
+            <value>WriteDateUseDateFormat</value>
+            <!-- 禁用fastjson循环引用检测 -->
+            <value>DisableCircularReferenceDetect</value>
+        </list>
+    </property>
+    <property name="filters" ref="maskValueFilter"/><!-- 引用脱敏-->
+</bean>
+</mvc:message-converters>

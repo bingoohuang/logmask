@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <property scope="context" resource="mask-rule.properties"/>
-    <conversionRule conversionWord="mask" converterClass="cn.bjca.footstone.logmask.MaskMessageConverter"/>
+    <conversionRule conversionWord="mask" converterClass="cn.bjca.footstone.logmask.MaskRuleMessageConverter"/>
 
     <property name="PATTERN1"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} PATTERN1 %highlight(%-5level) [%boldYellow(%thread)] %boldGreen(%logger) : %boldYellow(%mask) %n"/>

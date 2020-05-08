@@ -8,8 +8,6 @@ import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 
-import java.util.Map;
-
 /**
  * 用于生成子类的StringDesc
  *
@@ -18,23 +16,10 @@ import java.util.Map;
 @Slf4j
 @Data
 public class ToString {
-  private Map<String, RuleConfig> rulesMap;
   protected Object bean;
 
   public String mask(Object obj, String rule) {
-    if (obj == null) {
-      return null;
-    }
-
-    if (rule == null) {
-      return obj.toString();
-    }
-
-    if (rulesMap != null && rulesMap.get(rule) != null) {
-      return rulesMap.get(rule).mask(obj.toString());
-    }
-
-    return "___";
+    return MaskRule.mask(obj, rule);
   }
 
   public static ToString create(Class<?> clazz) {

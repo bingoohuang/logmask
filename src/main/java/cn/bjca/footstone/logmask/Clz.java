@@ -12,17 +12,18 @@ import java.util.Map;
 public class Clz {
   public static Map<String, String> loadValues(String classpath) {
     val map = new HashMap<String, String>(10);
-
     val regexTxt = Clz.loadResAsString(classpath);
-    String lines[] = regexTxt.split("\\n");
 
-    for (val line : lines) {
+    for (val line : regexTxt.split("\\n")) {
       String l = line.trim();
       if (l.length() == 0 || l.startsWith("#") || l.startsWith("//") || l.startsWith("--")) {
         continue;
       }
 
       int col = l.indexOf(":");
+      if (col <= 0) {
+        col = l.indexOf("=");
+      }
       if (col <= 0) {
         continue;
       }
