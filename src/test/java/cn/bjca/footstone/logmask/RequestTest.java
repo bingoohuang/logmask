@@ -26,7 +26,7 @@ public class RequestTest {
 
   @Test
   public void testFastJSON() {
-    log.info("testFastJSON params: {}", JSON.toJSONString(r, new MaskValueFilter()));
+    log.info("testFastJSON params: {}", JSON.toJSONString(r, new FastjsonMaskValueFilter()));
   }
 
   @Data

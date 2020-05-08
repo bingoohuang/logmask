@@ -7,7 +7,7 @@ import lombok.val;
 import java.lang.reflect.Field;
 
 @Slf4j
-public class MaskValueFilter implements ValueFilter {
+public class FastjsonMaskValueFilter implements ValueFilter {
   @Override
   public Object process(Object object, String name, Object value) {
     if (value == null) {
