@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 @Slf4j
@@ -21,6 +22,7 @@ public class RequestTest {
       new Request(
           "1111222233334444", "18611112222", "bingoo.huang@gmail.com", "12345678", "beijing");
 
+  @Ignore
   @Test
   @SneakyThrows
   public void testJackson() {
