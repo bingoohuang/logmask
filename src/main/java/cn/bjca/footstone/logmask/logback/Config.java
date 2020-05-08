@@ -1,4 +1,4 @@
-package cn.bjca.footstone.logmask;
+package cn.bjca.footstone.logmask.logback;
 
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
@@ -15,7 +15,7 @@ import java.io.InputStream;
  *
  * @author bingoobjca
  */
-public class LogbackConfig {
+public class Config {
   /**
    * 通过指定类路径上的XML配置文件设置Logback的全局配置。
    *
@@ -48,6 +48,6 @@ public class LogbackConfig {
   }
 
   public static InputStream classpathResource(String resourceName) {
-    return LogbackConfig.class.getClassLoader().getResourceAsStream(resourceName);
+    return Config.class.getClassLoader().getResourceAsStream(resourceName);
   }
 }

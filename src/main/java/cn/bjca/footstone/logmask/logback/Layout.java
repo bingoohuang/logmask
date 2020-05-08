@@ -1,13 +1,14 @@
-package cn.bjca.footstone.logmask;
+package cn.bjca.footstone.logmask.logback;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import cn.bjca.footstone.logmask.MaskConfig;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LogbackLayout extends PatternLayout {
+public class Layout extends PatternLayout {
   public static ThreadLocal<List<MaskConfig>> masksThreadLocal;
   @Getter private final List<MaskConfig> masks = new ArrayList<MaskConfig>();
 

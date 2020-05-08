@@ -1,5 +1,7 @@
-package cn.bjca.footstone.logmask;
+package cn.bjca.footstone.logmask.fastjson;
 
+import cn.bjca.footstone.logmask.Mask;
+import cn.bjca.footstone.logmask.MaskRule;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -7,7 +9,7 @@ import lombok.val;
 import java.lang.reflect.Field;
 
 @Slf4j
-public class FastjsonMaskValueFilter implements ValueFilter {
+public class MaskValueFilter implements ValueFilter {
   @Override
   public Object process(Object object, String name, Object value) {
     if (value == null) {

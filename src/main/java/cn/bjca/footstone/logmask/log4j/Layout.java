@@ -1,5 +1,7 @@
-package cn.bjca.footstone.logmask;
+package cn.bjca.footstone.logmask.log4j;
 
+import cn.bjca.footstone.logmask.LogMask;
+import cn.bjca.footstone.logmask.MaskConfig;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.val;
@@ -10,7 +12,7 @@ import org.apache.log4j.spi.LoggingEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Log4jLayout extends PatternLayout {
+public class Layout extends PatternLayout {
   // 用于从xml接收配置，
   @Getter private String masks;
   @Getter @Setter private String others;

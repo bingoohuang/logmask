@@ -23,6 +23,7 @@ mask sensitive in the log
 1. [基于java反射，在运行时动态擦除对象中的敏感信息](https://github.com/Skydre/desensitization)
 1. [日志脱敏 DestinyAries / log-tool](https://github.com/DestinyAries/log-tool)
 1. [github log desensitization search](https://github.com/search?p=2&q=log+desensitization&type=Code)
+1. [专治各种数据脱敏-Jackson-fastjson-logback](https://blog.csdn.net/qq_26418435/article/details/103620548)
 
 ## logback PatternLayout
 

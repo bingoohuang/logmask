@@ -1,13 +1,14 @@
-package cn.bjca.footstone.logmask;
+package cn.bjca.footstone.logmask.logback;
 
-import ch.qos.logback.classic.pattern.MessageConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import cn.bjca.footstone.logmask.Mask;
+import cn.bjca.footstone.logmask.ToString;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.slf4j.helpers.MessageFormatter;
 
 @Slf4j
-public class MaskRuleMessageConverter extends MessageConverter {
+public class MessageConverter extends ch.qos.logback.classic.pattern.MessageConverter {
   @Override
   public String convert(ILoggingEvent event) {
     return doConvert(event);

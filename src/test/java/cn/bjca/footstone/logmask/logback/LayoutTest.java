@@ -1,4 +1,4 @@
-package cn.bjca.footstone.logmask;
+package cn.bjca.footstone.logmask.logback;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.*;
@@ -7,10 +7,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 @Slf4j
-public class LogbackLayoutTest {
+public class LayoutTest {
   @BeforeClass
   public static void beforeClass() {
-    LogbackConfig.configXMLFile("logback-layout.xml");
+    Config.configXMLFile("logback-layout.xml");
   }
 
   @Test
