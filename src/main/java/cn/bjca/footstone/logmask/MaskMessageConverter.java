@@ -39,7 +39,7 @@ public class MaskMessageConverter extends MessageConverter {
       rule = rule.substring(0, rule.length() - "_REG".length());
       String replace = context.get(rule + "_REPLACE");
       if (replace == null) {
-        replace = "---";
+        replace = "___";
       }
 
       rulesMap.put(rule, new RuleConfig(entry.getValue(), replace));

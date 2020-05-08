@@ -13,5 +13,17 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.TYPE})
 public @interface Mask {
+  /**
+   * 预定义的规则名称.
+   *
+   * @return rule name
+   */
   String rule() default "";
+
+  /**
+   * 是否直接忽略
+   *
+   * @return true/false
+   */
+  boolean ignore() default false;
 }

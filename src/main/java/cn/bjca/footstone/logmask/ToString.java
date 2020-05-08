@@ -34,7 +34,7 @@ public class ToString {
       return rulesMap.get(rule).mask(obj.toString());
     }
 
-    return "---";
+    return "___";
   }
 
   public static ToString create(Class<?> clazz) {
@@ -57,6 +57,11 @@ public class ToString {
       boolean first = true;
 
       for (CtField field : beanCt.getDeclaredFields()) {
+        val mask = (Mask) field.getAnnotation(Mask.class);
+        if (mask != null && mask.ignore()) {
+          continue;
+        }
+
         if (!first) {
           sb.append("sb.append(\", \");");
         }
@@ -68,9 +73,8 @@ public class ToString {
           val getter = "get" + capital(fName);
           sb.append("sb.append(\"" + fName + "=\" +mask(((" + bClass + ")bean)." + getter + "(), ");
 
-          val annotation = field.getAnnotation(Mask.class);
-          if (annotation != null) {
-            sb.append("\"" + ((Mask) annotation).rule() + "\"));");
+          if (mask != null) {
+            sb.append("\"" + mask.rule() + "\"));");
           } else {
             sb.append("null));");
           }

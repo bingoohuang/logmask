@@ -17,7 +17,9 @@ public class RequestTest {
 
   @Test
   public void testMaskMe() {
-    val r = new Request("1111222233334444", "18611112222", "bingoo.huang@gmail.com", "12345678");
+    val r =
+        new Request(
+            "1111222233334444", "18611112222", "bingoo.huang@gmail.com", "12345678", "beijing");
     log.info("MaskMeRequest params: {}", r);
   }
 
@@ -35,7 +37,9 @@ public class RequestTest {
     @Mask(rule = "EMAIL")
     private String email;
 
-    @Mask(rule = "PASSWORD")
+    @Mask(ignore = true)
     private String payPasswd;
+
+    private String address;
   }
 }
