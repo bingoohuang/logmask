@@ -52,11 +52,12 @@ public class MaskMessageConverter extends MessageConverter {
     isInit = true;
   }
 
-  private String doConvert(ILoggingEvent event) {
-    boolean maskMeRequired = false;
-    Object[] argumentArray = event.getArgumentArray();
-    if (argumentArray != null && argumentArray.length > 0) {
-      for (Object obj : argumentArray) {
+  private String doConvert(ILoggingEvent e) {
+    Object[] arr = e.getArgumentArray();
+    if (arr != null && arr.length > 0) {
+      boolean maskMeRequired = false;
+
+      for (Object obj : arr) {
         if (obj.getClass().isAnnotationPresent(Mask.class)) {
           maskMeRequired = true;
           break;
@@ -64,12 +65,11 @@ public class MaskMessageConverter extends MessageConverter {
       }
 
       if (maskMeRequired) {
-        val maskedObjs = mask(argumentArray);
-        return MessageFormatter.arrayFormat(event.getMessage(), maskedObjs.toArray()).getMessage();
+        return MessageFormatter.arrayFormat(e.getMessage(), mask(arr).toArray()).getMessage();
       }
     }
 
-    return event.getFormattedMessage();
+    return e.getFormattedMessage();
   }
 
   private List<Object> mask(Object[] argumentArray) {
