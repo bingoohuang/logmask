@@ -8,8 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogbackLayout extends PatternLayout {
-  public static final ThreadLocal<List<MaskConfig>> masksThreadLocal =
-      new InheritableThreadLocal<List<MaskConfig>>();
+  public static ThreadLocal<List<MaskConfig>> masksThreadLocal;
   @Getter private final List<MaskConfig> masks = new ArrayList<MaskConfig>();
 
   public void addMask(MaskConfig mask) {
@@ -18,8 +17,21 @@ public class LogbackLayout extends PatternLayout {
 
   @Override
   public void start() {
-    masksThreadLocal.set(masks);
+    masksThreadLocal =
+        new InheritableThreadLocal<List<MaskConfig>>() {
+          @Override
+          protected List<MaskConfig> initialValue() {
+            return masks;
+          }
+        };
+
     super.start();
+  }
+
+  @Override
+  public void stop() {
+    super.stop();
+    masksThreadLocal.remove();
   }
 
   @Override

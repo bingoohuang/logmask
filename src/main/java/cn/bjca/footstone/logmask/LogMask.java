@@ -4,7 +4,7 @@ import lombok.val;
 
 import java.util.List;
 
-public class Masker {
+public class LogMask {
   public static String mask(List<MaskConfig> maskConfigs, String src) {
     String dest = patternMask(maskConfigs, src);
     return keysMask(maskConfigs, dest);

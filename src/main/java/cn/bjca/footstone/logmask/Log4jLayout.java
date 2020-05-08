@@ -11,13 +11,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Log4jLayout extends PatternLayout {
+  // 用于从xml接收配置，
   @Getter private String masks;
   @Getter @Setter private String others;
-  @Getter private List<MaskConfig> parsed = new ArrayList<MaskConfig>();
+  @Getter private final List<MaskConfig> parsed = new ArrayList<MaskConfig>();
   @Getter @Setter private String separate = " ";
 
-  public void setMasks(String mask) {
-    this.parsed.add(parseMask(mask));
+  public void setMasks(String masks) {
+    this.parsed.add(parseMask(masks));
   }
 
   /** 所有的参数已经设置完毕后调用 */
@@ -56,7 +57,7 @@ public class Log4jLayout extends PatternLayout {
             Logger.getLogger(event.getLoggerName()),
             event.timeStamp,
             event.getLevel(),
-            Masker.mask(parsed, event.getRenderedMessage()),
+            LogMask.mask(parsed, event.getRenderedMessage()),
             ti != null ? ti.getThrowable() : null));
   }
 }

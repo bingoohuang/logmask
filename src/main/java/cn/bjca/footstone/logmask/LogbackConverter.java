@@ -6,6 +6,6 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 public class LogbackConverter extends ClassicConverter {
   @Override
   public String convert(ILoggingEvent event) {
-    return Masker.mask(LogbackLayout.masksThreadLocal.get(), event.getFormattedMessage());
+    return LogMask.mask(LogbackLayout.masksThreadLocal.get(), event.getFormattedMessage());
   }
 }

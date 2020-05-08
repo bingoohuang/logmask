@@ -12,7 +12,7 @@ import org.junit.Test;
 public class RequestTest {
   @BeforeClass
   public static void beforeClass() {
-    LogbackConfig.configFile("logback-mask.xml");
+    LogbackConfig.configXMLFile("logback-mask.xml");
   }
 
   @Test

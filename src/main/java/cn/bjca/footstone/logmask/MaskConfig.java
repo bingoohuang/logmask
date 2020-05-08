@@ -5,6 +5,11 @@ import lombok.val;
 
 import java.util.regex.Pattern;
 
+/**
+ * 掩码配置类。
+ *
+ * @author bingoobjca
+ */
 @Data
 public class MaskConfig {
   private String pattern;

@@ -10,9 +10,19 @@ import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 
+/**
+ * Logback指定XML配置文件
+ *
+ * @author bingoobjca
+ */
 public class LogbackConfig {
+  /**
+   * 通过指定类路径上的XML配置文件设置Logback的全局配置。
+   *
+   * @param classpathLogbackXmlFile 类路径上的XML配置文件名称。
+   */
   @SneakyThrows
-  public static void configFile(String classpathLogbackXmlFile) {
+  public static void configXMLFile(String classpathLogbackXmlFile) {
     @Cleanup val fileStream = classpathResource(classpathLogbackXmlFile);
     if (fileStream != null) {
       config(fileStream);

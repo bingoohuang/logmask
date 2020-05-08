@@ -77,7 +77,7 @@ public class MaskMessageConverter extends MessageConverter {
 
     for (Object obj : argumentArray) {
       Class<?> aClass = obj.getClass();
-      val stringDesc = StringDescCreator.createStringDesc(aClass);
+      val stringDesc = StringDesc.create(aClass);
       if (stringDesc != null) {
         stringDesc.setBean(obj);
         stringDesc.setRulesMap(rulesMap);
