@@ -1,17 +1,16 @@
 package cn.bjca.footstone.logmask;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 @Slf4j
-public class Slf4jMaskLayoutTest {
+public class LogbackLayoutTest {
   @BeforeClass
   public static void beforeClass() {
-    LogbackConfig.configFile("logback-mask.xml");
+    LogbackConfig.configFile("logback-layout.xml");
   }
 
   @Test
@@ -30,5 +29,34 @@ public class Slf4jMaskLayoutTest {
     val addr = mapper.writeValueAsString(new Person.Addr(city, 100100));
     val bean = mapper.writeValueAsString(new Person.Bean("bingo\\\":\\\"ohuang", 100, addr));
     log.info("bean：{}", bean);
+  }
+
+  @Data
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class Person {
+    private String name;
+    private String creditCard;
+    private String id;
+
+    @AllArgsConstructor
+    public static class Bean {
+      public String name;
+      public int age;
+      public String address;
+    }
+
+    @AllArgsConstructor
+    public static class Addr {
+      public String city;
+      public int postcode;
+    }
+
+    @AllArgsConstructor
+    public static class City {
+      public String name;
+      public String capital;
+      public int zoneCode;
+    }
   }
 }

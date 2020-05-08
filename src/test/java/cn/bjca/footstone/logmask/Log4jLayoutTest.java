@@ -5,7 +5,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 @Log4j
-public class Log4JLayoutTest {
+public class Log4jLayoutTest {
   @BeforeClass
   public static void beforeClass() {
     Log4jConfig.configXMLFile("log4j-mask.xml");

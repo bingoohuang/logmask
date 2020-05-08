@@ -5,14 +5,14 @@ import lombok.val;
 import java.util.List;
 
 public class Masker {
-  public static String mask(List<Mask> masks, String src) {
-    String dest = patternMask(masks, src);
-    return keysMask(masks, dest);
+  public static String mask(List<MaskConfig> maskConfigs, String src) {
+    String dest = patternMask(maskConfigs, src);
+    return keysMask(maskConfigs, dest);
   }
 
-  private static String keysMask(List<Mask> masks, String src) {
+  private static String keysMask(List<MaskConfig> maskConfigs, String src) {
     String dest = src;
-    for (val p : masks) {
+    for (val p : maskConfigs) {
       if (p.getKeys() == null) {
         continue;
       }
@@ -27,7 +27,7 @@ public class Masker {
     return dest;
   }
 
-  private static String keyMask(Mask mask, String key, String src) {
+  private static String keyMask(MaskConfig maskConfig, String key, String src) {
     int start = src.indexOf(key);
     if (start < 0) {
       return src;
@@ -71,13 +71,13 @@ public class Masker {
 
         if (valueEnd > 0) {
           String value = src.substring(next + key.length() + 1, valueEnd);
-          sb.append(mask.replace(value));
+          sb.append(maskConfig.replace(value));
           start = valueEnd;
           continue;
         }
 
         String value = src.substring(next + key.length() + 1);
-        sb.append(mask.replace(value));
+        sb.append(maskConfig.replace(value));
         break;
       }
 
@@ -92,7 +92,7 @@ public class Masker {
 
         String value = src.substring(valueStart + keyQuote.length() + 1, valueEnd);
         sb.append(src, next + key.length(), valueStart + keyQuote.length() + 1);
-        sb.append(mask.replace(value));
+        sb.append(maskConfig.replace(value));
         start = valueEnd;
         continue;
       }
@@ -119,7 +119,7 @@ public class Masker {
     return !(c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9');
   }
 
-  private static String patternMask(List<Mask> masks, String src) {
+  private static String patternMask(List<MaskConfig> masks, String src) {
     String dest = src;
 
     for (val p : masks) {

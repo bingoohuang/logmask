@@ -8,11 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LogbackLayout extends PatternLayout {
-  public static final ThreadLocal<List<Mask>> masksThreadLocal =
-      new InheritableThreadLocal<List<Mask>>();
-  @Getter private final List<Mask> masks = new ArrayList<Mask>();
+  public static final ThreadLocal<List<MaskConfig>> masksThreadLocal =
+      new InheritableThreadLocal<List<MaskConfig>>();
+  @Getter private final List<MaskConfig> masks = new ArrayList<MaskConfig>();
 
-  public void addMask(Mask mask) {
+  public void addMask(MaskConfig mask) {
     this.masks.add(mask.fix());
   }
 

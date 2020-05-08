@@ -15,19 +15,21 @@ import java.util.Map;
 
 @Slf4j
 public class MaskMessageConverter extends MessageConverter {
-  private static Map<String, RuleConfig> rulesMasp;
+  private static Map<String, RuleConfig> rulesMap;
   private static boolean isInit = false;
 
   @Override
   public String convert(ILoggingEvent event) {
-    if (!isInit) init();
+    if (!isInit) {
+      init();
+    }
 
     return doConvert(event);
   }
 
   private void init() {
     synchronized (MaskMessageConverter.class) {
-      rulesMasp = new HashMap<String, RuleConfig>();
+      rulesMap = new HashMap<String, RuleConfig>(10);
       val propertyMap = ((LoggerContext) LoggerFactory.getILoggerFactory()).getCopyOfPropertyMap();
 
       for (Map.Entry<String, String> entry : propertyMap.entrySet()) {
@@ -43,9 +45,10 @@ public class MaskMessageConverter extends MessageConverter {
           replace = "---";
         }
 
-        rulesMasp.put(ruleName, new RuleConfig(value, replace));
+        rulesMap.put(ruleName, new RuleConfig(value, replace));
       }
     }
+
     isInit = true;
   }
 
@@ -54,14 +57,14 @@ public class MaskMessageConverter extends MessageConverter {
     Object[] argumentArray = event.getArgumentArray();
     if (argumentArray != null && argumentArray.length > 0) {
       for (Object obj : argumentArray) {
-        MaskMe annotation = obj.getClass().getAnnotation(MaskMe.class);
-        if (annotation != null) {
+        if (obj.getClass().isAnnotationPresent(Mask.class)) {
           maskMeRequired = true;
           break;
         }
       }
+
       if (maskMeRequired) {
-        List<Object> maskedObjs = mask(argumentArray);
+        val maskedObjs = mask(argumentArray);
         return MessageFormatter.arrayFormat(event.getMessage(), maskedObjs.toArray()).getMessage();
       }
     }
@@ -70,19 +73,20 @@ public class MaskMessageConverter extends MessageConverter {
   }
 
   private List<Object> mask(Object[] argumentArray) {
-    List<Object> argumentList = new ArrayList<Object>();
+    val argumentList = new ArrayList<Object>();
+
     for (Object obj : argumentArray) {
       Class<?> aClass = obj.getClass();
-      MaskMe annotation = aClass.getAnnotation(MaskMe.class);
-      StringDesc stringDesc = StringDescCreator.createStringDesc(aClass);
+      val stringDesc = StringDescCreator.createStringDesc(aClass);
       if (stringDesc != null) {
         stringDesc.setBean(obj);
-        stringDesc.setRulesMap(rulesMasp);
+        stringDesc.setRulesMap(rulesMap);
         argumentList.add(stringDesc);
       } else {
         argumentList.add(obj);
       }
     }
+
     return argumentList;
   }
 }

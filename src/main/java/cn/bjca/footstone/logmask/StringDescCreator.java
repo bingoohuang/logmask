@@ -6,7 +6,7 @@ import lombok.val;
 
 @Slf4j
 public class StringDescCreator {
-  public static <T> StringDesc createStringDesc(Class<T> clazz) {
+  public static StringDesc createStringDesc(Class<?> clazz) {
     try {
       ClassPool pool = ClassPool.getDefault();
       pool.insertClassPath(new ClassClassPath(StringDesc.class));
@@ -17,20 +17,28 @@ public class StringDescCreator {
       // 设置动态类的父类是StringDesc
       beanStringDescCt.setSuperclass(stringDescCt);
       // strBuilder用于构建toString方法体
-      StringBuilder strBuilder = new StringBuilder();
+      val strBuilder = new StringBuilder();
       String beanClassName = clazz.getName();
       strBuilder.append("java.lang.StringBuilder sb = new java.lang.StringBuilder();");
       // 输出bean类名
-      strBuilder.append("sb.append(\"" + beanClassName + "[\");");
+      strBuilder.append("sb.append(\"" + beanClassName + "(\");");
       CtClass beanCt = pool.get(beanClassName);
       CtField[] fields = beanCt.getDeclaredFields();
+      boolean first = true;
+
       for (CtField field : fields) {
+        if (!first) {
+          strBuilder.append("sb.append(\", \");");
+        }
+
+        first = false;
+
         String fieldName = field.getName();
         try {
-          val annotation = field.getAnnotation(MaskMe.class);
+          val annotation = field.getAnnotation(Mask.class);
           val method = "get" + fieldName.substring(0, 1).toUpperCase() + fieldName.substring(1);
           if (annotation != null) {
-            val d = (MaskMe) annotation;
+            val d = (Mask) annotation;
             strBuilder.append(
                 "sb.append(\""
                     + fieldName
@@ -40,7 +48,7 @@ public class StringDescCreator {
                     + method
                     + "(), \""
                     + d.type()
-                    + "\")+ \", \");");
+                    + "\"));");
           } else {
             strBuilder.append(
                 "sb.append(\""
@@ -49,19 +57,20 @@ public class StringDescCreator {
                     + beanClassName
                     + ")bean)."
                     + method
-                    + "() + \", \");");
+                    + "());");
           }
+
         } catch (ClassNotFoundException e) {
           e.printStackTrace();
         }
       }
-      strBuilder.append("sb.append(\"]\");");
+
+      strBuilder.append("sb.append(\")\");");
       strBuilder.append("return sb.toString();");
       // 动态构建toString方法
       CtMethod sm = new CtMethod(pool.get("java.lang.String"), "toString", null, beanStringDescCt);
       // 设置方法体
       String toString = strBuilder.toString();
-      // System.out.println("toString: " + toString);
       sm.setBody("{" + toString + "}");
       // 将toString方法添加到动态类中
       beanStringDescCt.addMethod(sm);

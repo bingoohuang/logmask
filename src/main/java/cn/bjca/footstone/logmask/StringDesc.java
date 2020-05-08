@@ -6,9 +6,14 @@ import lombok.val;
 
 import java.util.Map;
 
-public class StringDesc<T> {
+/**
+ * 用于生成子类的StringDesc
+ *
+ * @author bingoobjca
+ */
+public class StringDesc {
   @Setter public Map<String, RuleConfig> rulesMap;
-  @Setter @Getter public T bean;
+  @Setter @Getter public Object bean;
 
   public String mask(Object object, String ruleName) {
     if (object == null) {

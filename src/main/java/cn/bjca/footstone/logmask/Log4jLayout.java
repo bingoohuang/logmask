@@ -13,7 +13,7 @@ import java.util.List;
 public class Log4jLayout extends PatternLayout {
   @Getter private String masks;
   @Getter @Setter private String others;
-  @Getter private List<Mask> parsed = new ArrayList<Mask>();
+  @Getter private List<MaskConfig> parsed = new ArrayList<MaskConfig>();
   @Getter @Setter private String separate = " ";
 
   public void setMasks(String mask) {
@@ -26,9 +26,9 @@ public class Log4jLayout extends PatternLayout {
     super.activateOptions();
   }
 
-  private Mask parseMask(String mask) {
+  private MaskConfig parseMask(String mask) {
     val parts = mask.split(separate);
-    val m = new Mask();
+    val m = new MaskConfig();
 
     for (val part : parts) {
       val kvs = part.split("=", 2);
