@@ -1,15 +1,17 @@
 package cn.bjca.footstone.logmask.log4j;
 
+import lombok.experimental.UtilityClass;
 import org.apache.log4j.xml.DOMConfigurator;
 
 import java.net.URL;
 
+@UtilityClass
 public class Log4j {
-  public static void configXMLFile(String classpathConfigFile) {
+  public void config(String classpathConfigFile) {
     DOMConfigurator.configure(classpathResource(classpathConfigFile));
   }
 
-  public static URL classpathResource(String resourceName) {
+  public URL classpathResource(String resourceName) {
     return Log4j.class.getClassLoader().getResource(resourceName);
   }
 }

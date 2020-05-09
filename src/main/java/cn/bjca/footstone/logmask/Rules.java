@@ -12,7 +12,7 @@ import java.util.Map;
 @Value
 @AllArgsConstructor
 public class Rules {
-  Map<String, RuleConfig> rules;
+  Map<String, RuleConfig> ruleConfigMap;
 
   public static Rules load(String rulesFile) {
     val rules = new HashMap<String, RuleConfig>(10);
@@ -45,7 +45,7 @@ public class Rules {
     if (obj == null) return null;
     if (rule == null) return obj.toString();
 
-    val rc = rules.get(rule);
+    val rc = ruleConfigMap.get(rule);
     return rc != null ? rc.mask(obj.toString()) : LogMask.DEFAULT_MASK;
   }
 
@@ -53,7 +53,8 @@ public class Rules {
   @NoArgsConstructor
   @AllArgsConstructor
   public static class RuleConfig {
-    private String reg, replace;
+    private String reg;
+    private String replace;
 
     public String mask(String s) {
       return s.replaceAll(reg, replace);

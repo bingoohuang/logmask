@@ -1,7 +1,6 @@
 package cn.bjca.footstone.logmask.logback;
 
 import ch.qos.logback.classic.PatternLayout;
-import ch.qos.logback.classic.spi.ILoggingEvent;
 import cn.bjca.footstone.logmask.Config;
 import cn.bjca.footstone.logmask.impl.Clz;
 import lombok.Data;
@@ -11,7 +10,7 @@ import java.util.Map;
 
 @Data
 public class Layout extends PatternLayout {
-  public static ThreadLocal<Config> config = new InheritableThreadLocal<Config>();
+  public static final ThreadLocal<Config> config = new InheritableThreadLocal<Config>();
   private String logmask = "logmask.xml";
 
   @Override
@@ -34,10 +33,5 @@ public class Layout extends PatternLayout {
   public void stop() {
     super.stop();
     config.remove();
-  }
-
-  @Override
-  public String doLayout(ILoggingEvent event) {
-    return super.doLayout(event);
   }
 }

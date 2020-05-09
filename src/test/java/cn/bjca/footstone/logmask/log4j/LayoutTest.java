@@ -7,7 +7,7 @@ import org.junit.Test;
 public class LayoutTest {
   @BeforeClass
   public static void beforeClass() {
-    Log4j.configXMLFile("log4j-mask.xml");
+    Log4j.config("log4j-mask.xml");
   }
 
   @Test

@@ -2,6 +2,7 @@ package cn.bjca.footstone.logmask.impl;
 
 import lombok.Cleanup;
 import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
 import lombok.val;
 
 import javax.xml.bind.JAXBContext;
@@ -11,8 +12,9 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
+@UtilityClass
 public class Clz {
-  public static Map<String, String> loadValues(String classpath) {
+  public Map<String, String> loadValues(String classpath) {
     val map = new HashMap<String, String>(10);
     val regexTxt = Clz.loadResAsString(classpath);
 
@@ -22,29 +24,20 @@ public class Clz {
         continue;
       }
 
-      int col = l.indexOf(":");
+      int col = l.indexOf(':');
       if (col <= 0) {
-        col = l.indexOf("=");
+        col = l.indexOf('=');
       }
-      if (col <= 0) {
-        continue;
+      if (col > 0) {
+        map.put(l.substring(0, col).trim(), l.substring(col + 1).trim());
       }
-
-      val name = l.substring(0, col).trim();
-      if (name.length() == 0) {
-        continue;
-      }
-
-      val value = l.substring(col + 1).trim();
-
-      map.put(name, value);
     }
 
     return map;
   }
 
   @SneakyThrows
-  public static String loadResAsString(String classpath) {
+  public String loadResAsString(String classpath) {
     @Cleanup val is = loadRes(classpath);
     return inputStreamToString(is);
   }
@@ -55,21 +48,21 @@ public class Clz {
    * @param classpath 类路径
    * @return 输入流
    */
-  public static InputStream loadRes(String classpath) {
+  public InputStream loadRes(String classpath) {
     return Clz.class.getClassLoader().getResourceAsStream(classpath);
   }
 
   @SneakyThrows
-  public static String inputStreamToString(InputStream is) {
+  public String inputStreamToString(InputStream is) {
     return bytesToString(inputStreamToByteArray(is));
   }
 
-  public static String bytesToString(byte[] bytes) {
+  public String bytesToString(byte[] bytes) {
     return new String(bytes, Charset.forName("UTF-8"));
   }
 
   @SneakyThrows
-  public static byte[] inputStreamToByteArray(InputStream is) {
+  public byte[] inputStreamToByteArray(InputStream is) {
     byte[] targetArray = new byte[is.available()];
 
     is.read(targetArray);
@@ -78,7 +71,8 @@ public class Clz {
   }
 
   @SneakyThrows
-  public static <T> T loadXML(String classpath, Class<T> clazz) {
+  @SuppressWarnings("unchecked")
+  public <T> T loadXML(String classpath, Class<T> clazz) {
     val ju = JAXBContext.newInstance(clazz).createUnmarshaller();
     return (T) ju.unmarshal(new StringReader(Clz.loadResAsString(classpath)));
   }

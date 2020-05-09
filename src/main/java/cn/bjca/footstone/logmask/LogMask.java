@@ -2,16 +2,18 @@ package cn.bjca.footstone.logmask;
 
 import cn.bjca.footstone.logmask.impl.Clz;
 import cn.bjca.footstone.logmask.impl.ToString;
+import lombok.experimental.UtilityClass;
 import lombok.val;
 
+@UtilityClass
 public class LogMask {
-  public static final String DEFAULT_MASK = "___";
+  public final String DEFAULT_MASK = "___";
 
-  public static String mask(Object obj) {
+  public String mask(Object obj) {
     return mask(Clz.loadXML("logmask.xml", Config.class).setup(), obj);
   }
 
-  public static String mask(Config config, Object obj) {
+  public String mask(Config config, Object obj) {
     if (obj == null) {
       return null;
     }
@@ -29,11 +31,11 @@ public class LogMask {
     return mask(config, obj.toString());
   }
 
-  public static String mask(Config config, String src) {
+  public String mask(Config config, String src) {
     return keysMask(config, patternMask(config, src));
   }
 
-  private static String keysMask(Config config, String src) {
+  private String keysMask(Config config, String src) {
     String dest = src;
     for (val p : config.getMask()) {
       if (p.getKeys() == null) {
@@ -50,7 +52,7 @@ public class LogMask {
     return dest;
   }
 
-  private static String keyMask(Config.Mask mask, String key, String src) {
+  private String keyMask(Config.Mask mask, String key, String src) {
     int start = src.indexOf(key);
     if (start < 0) {
       return src;
@@ -59,7 +61,7 @@ public class LogMask {
     val sb = new StringBuilder();
     start = 0;
 
-    while (true) {
+    do {
       int next = src.indexOf(key, start);
       if (next < 0) {
         sb.append(src.substring(start));
@@ -89,7 +91,7 @@ public class LogMask {
 
         int valueEnd = src.indexOf(", ", next + key.length());
         if (valueEnd < 0) {
-          valueEnd = src.indexOf(")", next + key.length());
+          valueEnd = src.indexOf(')', next + key.length());
         }
 
         if (valueEnd > 0) {
@@ -106,7 +108,7 @@ public class LogMask {
 
       // JSON
       if (isQuoteChar(leftChar) && isQuoteChar(rightChar)) {
-        int valueStart = src.indexOf(":", next + key.length());
+        int valueStart = src.indexOf(':', next + key.length());
         String keyQuote = src.substring(next + key.length(), valueStart);
         int valueEnd = src.indexOf(keyQuote + ",", valueStart + keyQuote.length() + 1);
         if (valueEnd < 0) {
@@ -121,12 +123,12 @@ public class LogMask {
       }
 
       start = next + key.length();
-    }
+    } while (true);
 
     return sb.toString();
   }
 
-  private static String patternMask(Config config, String src) {
+  private String patternMask(Config config, String src) {
     String dest = src;
 
     for (val p : config.getMask()) {
@@ -158,19 +160,19 @@ public class LogMask {
     return dest;
   }
 
-  private static boolean isQuoteChar(char c) {
+  private boolean isQuoteChar(char c) {
     return c == '"' || c == '\\';
   }
 
-  private static boolean isBoundaryChar(char l, char r) {
+  private boolean isBoundaryChar(char l, char r) {
     return isBoundaryChar(l) && isBoundaryChar(r);
   }
 
-  private static boolean isBlankChar(char c) {
+  private boolean isBlankChar(char c) {
     return c == ' ' || c == '\t';
   }
 
-  private static boolean isBoundaryChar(char c) {
+  private boolean isBoundaryChar(char c) {
     return !(c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9');
   }
 }
