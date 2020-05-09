@@ -4,7 +4,9 @@ import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
 
+import javax.xml.bind.JAXBContext;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -73,5 +75,11 @@ public class Clz {
     is.read(targetArray);
 
     return targetArray;
+  }
+
+  @SneakyThrows
+  public static <T> T loadXML(String classpath, Class<T> clazz) {
+    val ju = JAXBContext.newInstance(clazz).createUnmarshaller();
+    return (T) ju.unmarshal(new StringReader(Clz.loadResAsString(classpath)));
   }
 }

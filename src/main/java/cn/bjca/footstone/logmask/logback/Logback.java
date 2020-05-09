@@ -15,7 +15,7 @@ import java.io.InputStream;
  *
  * @author bingoobjca
  */
-public class Config {
+public class Logback {
   /**
    * 通过指定类路径上的XML配置文件设置Logback的全局配置。
    *
@@ -48,6 +48,6 @@ public class Config {
   }
 
   public static InputStream classpathResource(String resourceName) {
-    return Config.class.getClassLoader().getResourceAsStream(resourceName);
+    return Logback.class.getClassLoader().getResourceAsStream(resourceName);
   }
 }

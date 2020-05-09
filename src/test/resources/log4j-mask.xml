@@ -12,9 +12,6 @@
         <param name="target" value="System.out"/>
         <layout class="cn.bjca.footstone.logmask.log4j.Layout">
             <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p %C:%L - 脱敏后 %m%n"/>
-            <param name="Masks" value="pattern=\\d{12}\\d{3,5}[xX]? keep=3 mask=*** boundary=true"/>
-            <param name="Masks" value="pattern=\\d{5}"/>
-            <param name="Others" value="xxxyyy"/>
         </layout>
     </appender>
     <root>

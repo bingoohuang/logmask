@@ -1,6 +1,5 @@
 package cn.bjca.footstone.logmask.jackson;
 
-import cn.bjca.footstone.logmask.MaskRule;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.BeanProperty;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -30,6 +29,6 @@ public class MaskSerializer extends JsonSerializer<String> implements Contextual
       return;
     }
 
-    jg.writeObject(MaskRule.mask(o, mask.rule()));
+    //    jg.writeObject(Rules.mask(o, mask.rule()));
   }
 }

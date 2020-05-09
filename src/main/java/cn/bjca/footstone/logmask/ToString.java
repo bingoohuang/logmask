@@ -17,18 +17,27 @@ import lombok.val;
 @Data
 public class ToString {
   protected Object bean;
+  protected Config conf;
 
   public String mask(Object obj, String rule) {
-    return MaskRule.mask(obj, rule);
+    return conf.getParsedRules().mask(obj, rule);
   }
 
   public static ToString create(Class<?> clazz) {
+    val classname = clazz.getSimpleName() + "ToString";
+
     try {
+      try {
+        return (ToString) Class.forName(classname).newInstance();
+      } catch (ClassNotFoundException ignore) {
+      }
+
       val pool = ClassPool.getDefault();
+
       pool.insertClassPath(new ClassClassPath(ToString.class));
       pool.insertClassPath(new ClassClassPath(clazz));
       // beanStringDescCt是动态生成的类
-      val ctc = pool.makeClass(clazz.getSimpleName() + "ToString");
+      val ctc = pool.makeClass(classname);
       // 设置动态类的父类是StringDesc
       ctc.setSuperclass(pool.get(ToString.class.getName()));
       // strBuilder用于构建toString方法体
@@ -76,7 +85,8 @@ public class ToString {
       // 将toString方法添加到动态类中
       ctc.addMethod(sm);
       // 生成动态类实例
-      return (ToString) ctc.toClass().newInstance();
+      val clz = ctc.toClass();
+      return (ToString) clz.newInstance();
     } catch (Exception e) {
       log.info("日志脱敏生成toString方法失败：", e);
     }

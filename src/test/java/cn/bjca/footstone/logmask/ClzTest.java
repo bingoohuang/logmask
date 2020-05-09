@@ -8,18 +8,21 @@ import org.junit.Test;
 
 import java.util.Map;
 
+import static org.junit.Assert.assertTrue;
+
 public class ClzTest {
   @Test
   @SneakyThrows
   public void Test1() {
     Map<String, String> map = Clz.loadValues("lines.txt");
-    System.out.println(map);
+    assertTrue(map.size() > 0);
+
     val mapper = new ObjectMapper();
     val city = mapper.writeValueAsString(new City("beijing", "beijing", 10));
     val addr = mapper.writeValueAsString(new Addr(city, 100100));
     val bean = mapper.writeValueAsString(new Bean("bingoohuang", 100, addr));
 
-    System.out.println(bean);
+    assertTrue(bean.length() > 0);
   }
 
   @AllArgsConstructor

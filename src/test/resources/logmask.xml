@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config>
+    <rules>logmask.rules</rules>
+    <mask>
+        <pattern><![CDATA[\d{12}\d{3,5}[xX]?]]></pattern>
+        <keys>creditCard id name</keys>
+
+        <keep>3</keep>
+        <mask>***</mask>
+        <boundary>true</boundary>
+    </mask>
+    <mask>
+        <pattern><![CDATA[\d{5}]]></pattern>
+        <boundary>true</boundary>
+    </mask>
+</config>

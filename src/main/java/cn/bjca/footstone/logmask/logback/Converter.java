@@ -1,12 +1,57 @@
 package cn.bjca.footstone.logmask.logback;
 
+import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.pattern.ClassicConverter;
 import ch.qos.logback.classic.spi.ILoggingEvent;
+import cn.bjca.footstone.logmask.Clz;
+import cn.bjca.footstone.logmask.Config;
 import cn.bjca.footstone.logmask.LogMask;
+import cn.bjca.footstone.logmask.Mask;
+import lombok.val;
+import org.slf4j.LoggerFactory;
+import org.slf4j.helpers.MessageFormatter;
 
 public class Converter extends ClassicConverter {
   @Override
   public String convert(ILoggingEvent event) {
-    return LogMask.mask(Layout.masksThreadLocal.get(), event.getFormattedMessage());
+    Config conf = Layout.config.get();
+    if (conf == null) {
+      val c = (LoggerContext) LoggerFactory.getILoggerFactory();
+      String logmaskFile = c.getProperty("logmask");
+      if (logmaskFile == null) {
+        logmaskFile = "logmask.xml";
+      }
+
+      conf = Clz.loadXML(logmaskFile, Config.class).setup();
+      Layout.config.set(conf);
+    }
+
+    val msg = doConvert(conf, event);
+    return LogMask.mask(conf, msg);
+  }
+
+  private String doConvert(Config conf, ILoggingEvent e) {
+    val arr = e.getArgumentArray();
+    if (arr == null) {
+      return e.getFormattedMessage();
+    }
+
+    for (Object obj : arr) {
+      if (obj.getClass().isAnnotationPresent(Mask.class)) {
+        return MessageFormatter.arrayFormat(e.getMessage(), mask(conf, arr)).getMessage();
+      }
+    }
+
+    return e.getFormattedMessage();
+  }
+
+  private Object[] mask(Config conf, Object[] arr) {
+    val arguments = new Object[arr.length];
+
+    for (int i = 0; i < arr.length; i++) {
+      arguments[i] = LogMask.mask(conf, arr[i]);
+    }
+
+    return arguments;
   }
 }

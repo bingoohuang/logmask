@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <conversionRule conversionWord="mask" converterClass="cn.bjca.footstone.logmask.logback.MessageConverter"/>
+    <property scope="context" name="logmask" value="logmask.xml"/>
+    <conversionRule conversionWord="masklog" converterClass="cn.bjca.footstone.logmask.logback.Converter"/>
 
+    <property name="PATTERN0"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} PATTERN3 %highlight(%-5p) [%t] %cyan(%logger) 脱敏前: %m%n"/>
     <property name="PATTERN1"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} PATTERN1 %highlight(%-5level) [%boldYellow(%thread)] %boldGreen(%logger) : %boldYellow(%mask) %n"/>
-    <property name="PATTERN2"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} PATTERN3 %highlight(%-5p) [%t] %cyan(%logger) : %m%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} PATTERN1 %highlight(%-5level) [%boldYellow(%thread)] %boldGreen(%logger) 脱敏后: %boldYellow(%masklog) %n"/>
 
     <appender name="stdout1" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+        <encoder>
             <pattern>${PATTERN1}</pattern>
         </encoder>
     </appender>
-    <appender name="stdout2" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>${PATTERN2}</pattern>
+    <appender name="stdout0" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${PATTERN0}</pattern>
         </encoder>
     </appender>
 
     <root level="INFO">
+        <appender-ref ref="stdout0"/>
         <appender-ref ref="stdout1"/>
-        <appender-ref ref="stdout2"/>
     </root>
 </configuration>

@@ -1,14 +1,13 @@
 package cn.bjca.footstone.logmask.log4j;
 
-import lombok.extern.log4j.Log4j;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-@Log4j
+@lombok.extern.log4j.Log4j
 public class LayoutTest {
   @BeforeClass
   public static void beforeClass() {
-    Config.configXMLFile("log4j-mask.xml");
+    Log4j.configXMLFile("log4j-mask.xml");
   }
 
   @Test

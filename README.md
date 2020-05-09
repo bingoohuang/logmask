@@ -2,6 +2,13 @@
 
 mask sensitive in the log
 
+## usage
+
+### Direct API usage
+
+
+
+
 ## design
 
 日志行范围|脱敏范围|配置示例|日志示例|API支持|实现状态

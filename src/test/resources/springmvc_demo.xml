@@ -1,4 +1,4 @@
-<bean id="maskValueFilter" class="cn.bjca.footstone.logmask.fastjson.MaskValueFilter"/>
+<bean id="maskValueFilter" class="cn.bjca.footstone.logmask.json.MaskValueFilter"/>
 
 <mvc:message-converters register-defaults="true">
 <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">

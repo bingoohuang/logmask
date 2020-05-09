@@ -2,29 +2,36 @@ package cn.bjca.footstone.logmask.logback;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import cn.bjca.footstone.logmask.MaskConfig;
-import lombok.Getter;
+import cn.bjca.footstone.logmask.Clz;
+import cn.bjca.footstone.logmask.Config;
+import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
+@Data
 public class Layout extends PatternLayout {
-  public static ThreadLocal<List<MaskConfig>> masksThreadLocal;
-  @Getter private final List<MaskConfig> masks = new ArrayList<MaskConfig>();
+  public static ThreadLocal<Config> config = new InheritableThreadLocal<Config>();
+  private String logmask = "logmask.xml";
 
-  public void addMask(MaskConfig mask) {
-    this.masks.add(mask.fix());
+  public static final Map<String, String> defaultConverterMap;
+
+  static {
+    // clone default defaultConverterMap
+    defaultConverterMap = new HashMap<String, String>(PatternLayout.defaultConverterMap);
+    defaultConverterMap.put("m", Converter.class.getName());
+    defaultConverterMap.put("msg", Converter.class.getName());
+    defaultConverterMap.put("message", Converter.class.getName());
+  }
+
+  @Override
+  public Map<String, String> getDefaultConverterMap() {
+    return defaultConverterMap;
   }
 
   @Override
   public void start() {
-    masksThreadLocal =
-        new InheritableThreadLocal<List<MaskConfig>>() {
-          @Override
-          protected List<MaskConfig> initialValue() {
-            return masks;
-          }
-        };
+    config.set(Clz.loadXML(logmask, Config.class).setup());
 
     super.start();
   }
@@ -32,7 +39,7 @@ public class Layout extends PatternLayout {
   @Override
   public void stop() {
     super.stop();
-    masksThreadLocal.remove();
+    config.remove();
   }
 
   @Override

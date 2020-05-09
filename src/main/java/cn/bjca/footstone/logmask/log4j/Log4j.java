@@ -4,12 +4,12 @@ import org.apache.log4j.xml.DOMConfigurator;
 
 import java.net.URL;
 
-public class Config {
+public class Log4j {
   public static void configXMLFile(String classpathConfigFile) {
     DOMConfigurator.configure(classpathResource(classpathConfigFile));
   }
 
   public static URL classpathResource(String resourceName) {
-    return Config.class.getClassLoader().getResource(resourceName);
+    return Log4j.class.getClassLoader().getResource(resourceName);
   }
 }
