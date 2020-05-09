@@ -1,5 +1,11 @@
 # logmask
 
+[![Build Status](https://travis-ci.org/bingoohuang/logmask.svg?branch=master)](https://travis-ci.org/bingoohuang/logmask)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.github.bingoohuang%3Alogmask&metric=alert_status)](https://sonarcloud.io/dashboard/index/com.github.bingoohuang%3Alogmask)
+[![Coverage Status](https://coveralls.io/repos/github/bingoohuang/logmask/badge.svg?branch=master)](https://coveralls.io/github/bingoohuang/logmask?branch=master)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.bingoohuang/logmask/badge.svg?style=flat-square)](https://maven-badges.herokuapp.com/maven-central/com.github.bingoohuang/logmask/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 mask sensitive in the log
 
 ## usage
