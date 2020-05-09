@@ -4,10 +4,109 @@ mask sensitive in the log
 
 ## usage
 
+### Config
+
+logmask.xml配置文件
+
+> 注：请放置于于`classpath`，对应于maven工程结构的`src/main/resources`文件夹内，内
+
+```xml
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<config>
+    <!-- rules定义 JSON序列化与toString序列化JavaBean时的规则 -->
+    <rules>logmask.rules</rules>
+    <mask>
+        <!-- pattern 定义匹配的正则表达式 -->
+        <pattern><![CDATA[\d{12}\d{3,5}[xX]?]]></pattern>
+        <!-- boundary 定义pattern做正则匹配时，是否需要两边设定边界 -->
+        <boundary>true</boundary>
+
+        <!-- 指定json格式, key=value key:value形式的key，多个以空白分割 -->
+        <keys>creditCard id name</keys>
+
+        <!-- 脱敏后的数据保留, eg. -->
+        <!-- 3: 首尾各保留3位原字符，例如abcdefg -> abc***efg -->
+        <!-- 0,3: 尾部留3位原字符，例如abcdefg -> ***efg -->
+        <!-- 3,0: 首部留3位原字符，例如abcdefg -> abc*** -->
+        <keep>3</keep>
+
+        <!-- mask定义脱敏后用于替换的掩码字符串 -->
+        <mask>***</mask>
+
+        <!-- keepMasksLength表示掩码长度是否与原始字符串长度一样长 -->
+        <keepMasksLength>true</keepMasksLength>
+    </mask>
+    <mask>
+        <pattern><![CDATA[\d{5}]]></pattern>
+        <boundary>true</boundary>
+    </mask>
+</config>
+```
+
+logmask.rules规则配置文件:
+
+> 注：请放置于于`classpath`，对应于maven工程结构的`src/main/resources`文件夹内，内
+
+```
+# 姓名 匹配正则表达式与脱敏替换形式
+NAME_REG=([\u4E00-\u9FA5]{1})[\u4E00-\u9FA5]{1,}
+NAME_REPLACE=$1**
+
+# 手机号 匹配正则表达式与脱敏替换形式
+MOBILE_REG=(\d{3})\d{4}(\d{4})
+MOBILE_REPLACE=$1****$2
+
+# 邮箱 匹配正则表达式与脱敏替换形式
+EMAIL_REG=(\w+)(@\w+)
+EMAIL_REPLACE=******$2
+
+# 卡号 匹配正则表达式
+CARD_REG=(\w{4})(\w{4})(\w{4})(\w{4})
+# 不定义默认的替换形式时，使用全局的掩码___
+#CARD_REPLACE=$1*******$4
+```
+
+对应的JavaBean定义样例:
+
+```java
+@Mask
+public class Req {
+  @Mask private String receiveCardNo;
+
+  @Mask(rule = "MOBILE")
+  private String mobNo;
+
+  @Mask(rule = "EMAIL")
+  private String email;
+
+  @Mask(ignore = true)
+  private String payPasswd;
+
+  private String address;
+}
+```
+
 ### Direct API usage
 
+directly use `LogMask.mask(r)` to generate masked string.
 
+```java
+@Slf4j
+public class ToStringTest {
+  @Test
+  public void testToString() {
+    Req r =
+      new Req("1111222233334444", "18611112222", "bingoo.huang@gmail.com", "12345678", "beijing");
+    log.info("request: {}", LogMask.mask(r));
+  }
+}
+```
 
+输出：
+
+```log
+2020-05-09 16:34:28.743 INFO  [main] cn.bjca.footstone.logmask.json.ToStringTest : request params: cn.bjca.footstone.logmask.json.Req(receiveCardNo=___, mobNo=186****2222, email=bingoo.******@gmail.com, address=beijing) 
+```
 
 ## design
 
