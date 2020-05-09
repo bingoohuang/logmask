@@ -2,17 +2,36 @@ package cn.bjca.footstone.logmask;
 
 import lombok.val;
 
-import java.util.List;
-
 public class LogMask {
-  public static String mask(List<MaskConfig> maskConfigs, String src) {
-    String dest = patternMask(maskConfigs, src);
-    return keysMask(maskConfigs, dest);
+  public static final String DEFAULT_MASK = "___";
+
+  public static String mask(Object obj) {
+    return mask(Clz.loadXML("logmask.xml", Config.class).setup(), obj);
   }
 
-  private static String keysMask(List<MaskConfig> maskConfigs, String src) {
+  public static String mask(Config config, Object obj) {
+    if (obj == null) {
+      return null;
+    }
+
+    val desc = ToString.create(obj.getClass());
+    if (desc != null) {
+      desc.setBean(obj);
+      desc.setConf(config);
+
+      return desc.toString();
+    }
+
+    return obj.toString();
+  }
+
+  public static String mask(Config config, String src) {
+    return keysMask(config, patternMask(config, src));
+  }
+
+  private static String keysMask(Config config, String src) {
     String dest = src;
-    for (val p : maskConfigs) {
+    for (val p : config.getMask()) {
       if (p.getKeys() == null) {
         continue;
       }
@@ -27,7 +46,7 @@ public class LogMask {
     return dest;
   }
 
-  private static String keyMask(MaskConfig maskConfig, String key, String src) {
+  private static String keyMask(Config.Mask mask, String key, String src) {
     int start = src.indexOf(key);
     if (start < 0) {
       return src;
@@ -71,13 +90,13 @@ public class LogMask {
 
         if (valueEnd > 0) {
           String value = src.substring(next + key.length() + 1, valueEnd);
-          sb.append(maskConfig.replace(value));
+          sb.append(mask.replace(value));
           start = valueEnd;
           continue;
         }
 
         String value = src.substring(next + key.length() + 1);
-        sb.append(maskConfig.replace(value));
+        sb.append(mask.replace(value));
         break;
       }
 
@@ -92,7 +111,7 @@ public class LogMask {
 
         String value = src.substring(valueStart + keyQuote.length() + 1, valueEnd);
         sb.append(src, next + key.length(), valueStart + keyQuote.length() + 1);
-        sb.append(maskConfig.replace(value));
+        sb.append(mask.replace(value));
         start = valueEnd;
         continue;
       }
@@ -103,26 +122,10 @@ public class LogMask {
     return sb.toString();
   }
 
-  private static boolean isQuoteChar(char c) {
-    return c == '"' || c == '\\';
-  }
-
-  private static boolean isBoundaryChar(char l, char r) {
-    return isBoundaryChar(l) && isBoundaryChar(r);
-  }
-
-  private static boolean isBlankChar(char c) {
-    return c == ' ' || c == '\t';
-  }
-
-  private static boolean isBoundaryChar(char c) {
-    return !(c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9');
-  }
-
-  private static String patternMask(List<MaskConfig> masks, String src) {
+  private static String patternMask(Config config, String src) {
     String dest = src;
 
-    for (val p : masks) {
+    for (val p : config.getMask()) {
       if (p.getCompiled() == null) {
         continue;
       }
@@ -149,5 +152,21 @@ public class LogMask {
       }
     }
     return dest;
+  }
+
+  private static boolean isQuoteChar(char c) {
+    return c == '"' || c == '\\';
+  }
+
+  private static boolean isBoundaryChar(char l, char r) {
+    return isBoundaryChar(l) && isBoundaryChar(r);
+  }
+
+  private static boolean isBlankChar(char c) {
+    return c == ' ' || c == '\t';
+  }
+
+  private static boolean isBoundaryChar(char c) {
+    return !(c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9');
   }
 }

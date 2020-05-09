@@ -1,5 +1,6 @@
-package cn.bjca.footstone.logmask;
+package cn.bjca.footstone.logmask.json;
 
+import cn.bjca.footstone.logmask.Mask;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Mask
-public class Request {
+public class Req {
   @Mask private String receiveCardNo;
 
   @Mask(rule = "MOBILE")
