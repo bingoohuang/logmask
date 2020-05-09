@@ -5,8 +5,8 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import cn.bjca.footstone.logmask.Clz;
 import cn.bjca.footstone.logmask.Config;
 import lombok.Data;
+import lombok.val;
 
-import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -14,19 +14,14 @@ public class Layout extends PatternLayout {
   public static ThreadLocal<Config> config = new InheritableThreadLocal<Config>();
   private String logmask = "logmask.xml";
 
-  public static final Map<String, String> defaultConverterMap;
-
-  static {
-    // clone default defaultConverterMap
-    defaultConverterMap = new HashMap<String, String>(PatternLayout.defaultConverterMap);
-    defaultConverterMap.put("m", Converter.class.getName());
-    defaultConverterMap.put("msg", Converter.class.getName());
-    defaultConverterMap.put("message", Converter.class.getName());
-  }
-
   @Override
-  public Map<String, String> getDefaultConverterMap() {
-    return defaultConverterMap;
+  public Map<String, String> getEffectiveConverterMap() {
+    val m = super.getEffectiveConverterMap();
+    m.put("m", Converter.class.getName());
+    m.put("msg", Converter.class.getName());
+    m.put("message", Converter.class.getName());
+
+    return m;
   }
 
   @Override
