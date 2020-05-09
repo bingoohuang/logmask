@@ -20,7 +20,7 @@ import org.junit.Test;
 public class JacksonReqTest {
   @BeforeClass
   public static void beforeClass() {
-    Logback.configXMLFile("logback-mask.xml");
+    Logback.config("logback-mask.xml");
   }
 
   Request r =

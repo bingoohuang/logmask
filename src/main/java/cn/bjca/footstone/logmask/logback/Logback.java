@@ -22,7 +22,7 @@ public class Logback {
    * @param classpathLogbackXmlFile 类路径上的XML配置文件名称。
    */
   @SneakyThrows
-  public static void configXMLFile(String classpathLogbackXmlFile) {
+  public static void config(String classpathLogbackXmlFile) {
     @Cleanup val fileStream = classpathResource(classpathLogbackXmlFile);
     if (fileStream != null) {
       config(fileStream);

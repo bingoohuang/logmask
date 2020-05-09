@@ -14,15 +14,17 @@ public class LogMask {
       return null;
     }
 
-    val desc = ToString.create(obj.getClass());
-    if (desc != null) {
-      desc.setBean(obj);
-      desc.setConf(config);
+    if (obj.getClass().isAnnotationPresent(Mask.class)) {
+      val desc = ToString.create(obj.getClass());
+      if (desc != null) {
+        desc.setBean(obj);
+        desc.setConf(config);
 
-      return desc.toString();
+        return desc.toString();
+      }
     }
 
-    return obj.toString();
+    return mask(config, obj.toString());
   }
 
   public static String mask(Config config, String src) {

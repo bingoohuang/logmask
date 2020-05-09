@@ -6,7 +6,6 @@ import ch.qos.logback.classic.spi.ILoggingEvent;
 import cn.bjca.footstone.logmask.Clz;
 import cn.bjca.footstone.logmask.Config;
 import cn.bjca.footstone.logmask.LogMask;
-import cn.bjca.footstone.logmask.Mask;
 import lombok.val;
 import org.slf4j.LoggerFactory;
 import org.slf4j.helpers.MessageFormatter;
@@ -36,22 +35,10 @@ public class Converter extends ClassicConverter {
       return e.getFormattedMessage();
     }
 
-    for (Object obj : arr) {
-      if (obj.getClass().isAnnotationPresent(Mask.class)) {
-        return MessageFormatter.arrayFormat(e.getMessage(), mask(conf, arr)).getMessage();
-      }
-    }
-
-    return e.getFormattedMessage();
-  }
-
-  private Object[] mask(Config conf, Object[] arr) {
-    val arguments = new Object[arr.length];
-
     for (int i = 0; i < arr.length; i++) {
-      arguments[i] = LogMask.mask(conf, arr[i]);
+      arr[i] = LogMask.mask(conf, arr[i]);
     }
 
-    return arguments;
+    return MessageFormatter.arrayFormat(e.getMessage(), arr).getMessage();
   }
 }

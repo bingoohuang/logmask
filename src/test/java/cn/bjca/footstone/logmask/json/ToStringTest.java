@@ -10,7 +10,7 @@ import org.junit.Test;
 public class ToStringTest {
   @BeforeClass
   public static void beforeClass() {
-    Logback.configXMLFile("logback-mask.xml");
+    Logback.config("logback-mask.xml");
   }
 
   Req r =

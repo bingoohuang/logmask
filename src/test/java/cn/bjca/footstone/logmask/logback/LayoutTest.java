@@ -10,7 +10,7 @@ import org.junit.Test;
 public class LayoutTest {
   @BeforeClass
   public static void beforeClass() {
-    Logback.configXMLFile("logback-layout.xml");
+    Logback.config("logback-layout.xml");
   }
 
   @Test

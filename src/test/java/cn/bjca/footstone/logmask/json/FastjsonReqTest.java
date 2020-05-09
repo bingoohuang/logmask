@@ -11,7 +11,7 @@ import org.junit.Test;
 public class FastjsonReqTest {
   @BeforeClass
   public static void beforeClass() {
-    Logback.configXMLFile("logback-mask.xml");
+    Logback.config("logback-mask.xml");
   }
 
   @Test
