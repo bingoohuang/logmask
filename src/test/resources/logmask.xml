@@ -11,14 +11,14 @@
         <!-- 指定json格式, key=value key:value形式的key，多个以空白分割 -->
         <keys>creditCard id name</keys>
 
+        <!-- mask定义脱敏后用于替换的掩码字符串 -->
+        <mask>***</mask>
+
         <!-- 脱敏后的数据保留, eg. -->
         <!-- 3: 首尾各保留3位原字符，例如abcdefg -> abc***efg -->
         <!-- 0,3: 尾部留3位原字符，例如abcdefg -> ***efg -->
         <!-- 3,0: 首部留3位原字符，例如abcdefg -> abc*** -->
         <keep>3</keep>
-
-        <!-- mask定义脱敏后用于替换的掩码字符串 -->
-        <mask>***</mask>
 
         <!-- keepMasksLength表示掩码长度是否与原始字符串长度一样长 -->
         <keepMasksLength>true</keepMasksLength>

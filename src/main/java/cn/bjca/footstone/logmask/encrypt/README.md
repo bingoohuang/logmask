@@ -1,0 +1,1 @@
+1. [Cryptography With the DES Algorithm](https://dzone.com/articles/security-algorithms-des-algorithm), [github](https://github.com/sanjoy-sust/CryptographicAlgorithms)
