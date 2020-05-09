@@ -1,8 +1,8 @@
 package cn.bjca.footstone.logmask.log4j;
 
-import cn.bjca.footstone.logmask.Clz;
 import cn.bjca.footstone.logmask.Config;
 import cn.bjca.footstone.logmask.LogMask;
+import cn.bjca.footstone.logmask.impl.Clz;
 import lombok.experimental.Accessors;
 import lombok.val;
 import org.apache.log4j.Logger;

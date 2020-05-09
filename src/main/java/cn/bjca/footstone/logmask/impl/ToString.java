@@ -1,5 +1,7 @@
-package cn.bjca.footstone.logmask;
+package cn.bjca.footstone.logmask.impl;
 
+import cn.bjca.footstone.logmask.Config;
+import cn.bjca.footstone.logmask.Mask;
 import javassist.ClassClassPath;
 import javassist.ClassPool;
 import javassist.CtField;

@@ -1,5 +1,7 @@
 package cn.bjca.footstone.logmask;
 
+import cn.bjca.footstone.logmask.impl.Clz;
+import cn.bjca.footstone.logmask.impl.ToString;
 import lombok.val;
 
 public class LogMask {

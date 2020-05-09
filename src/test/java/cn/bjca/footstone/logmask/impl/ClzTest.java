@@ -1,4 +1,4 @@
-package cn.bjca.footstone.logmask;
+package cn.bjca.footstone.logmask.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;

@@ -1,5 +1,6 @@
 package cn.bjca.footstone.logmask;
 
+import cn.bjca.footstone.logmask.impl.Clz;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.Test;

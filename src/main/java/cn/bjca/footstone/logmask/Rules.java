@@ -1,9 +1,9 @@
 package cn.bjca.footstone.logmask;
 
-import lombok.AllArgsConstructor;
-import lombok.Value;
+import cn.bjca.footstone.logmask.impl.Clz;
+import cn.bjca.footstone.logmask.impl.Str;
+import lombok.*;
 import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +16,7 @@ public class Rules {
 
   public static Rules load(String rulesFile) {
     val rules = new HashMap<String, RuleConfig>(10);
-    Rules r = new Rules(rules);
+    val r = new Rules(rules);
 
     Map<String, String> ruleLines;
 
@@ -28,36 +28,35 @@ public class Rules {
     }
 
     for (val entry : ruleLines.entrySet()) {
-      String rule = entry.getKey();
+      val rule = entry.getKey();
       if (!rule.endsWith("_REG")) {
         continue;
       }
 
-      rule = rule.substring(0, rule.length() - "_REG".length());
-      String replace = ruleLines.get(rule + "_REPLACE");
-      if (replace == null) {
-        replace = LogMask.DEFAULT_MASK;
-      }
-
-      rules.put(rule, new RuleConfig(entry.getValue(), replace));
+      val ruleName = Str.stripPostfix(rule, "_REG");
+      val replace = Str.getOrDefault(ruleLines, ruleName + "_REPLACE", LogMask.DEFAULT_MASK);
+      rules.put(ruleName, new RuleConfig(entry.getValue(), replace));
     }
+
     return r;
   }
 
   public String mask(Object obj, String rule) {
-    if (obj == null) {
-      return null;
-    }
-
-    if (rule == null) {
-      return obj.toString();
-    }
+    if (obj == null) return null;
+    if (rule == null) return obj.toString();
 
     val rc = rules.get(rule);
-    if (rc != null) {
-      return rc.mask(obj.toString());
-    }
+    return rc != null ? rc.mask(obj.toString()) : LogMask.DEFAULT_MASK;
+  }
 
-    return LogMask.DEFAULT_MASK;
+  @Data
+  @NoArgsConstructor
+  @AllArgsConstructor
+  public static class RuleConfig {
+    private String reg, replace;
+
+    public String mask(String s) {
+      return s.replaceAll(reg, replace);
+    }
   }
 }

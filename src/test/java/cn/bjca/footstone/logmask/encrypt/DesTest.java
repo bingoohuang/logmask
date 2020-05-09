@@ -1,6 +1,5 @@
-package cn.bjca.footstone.logmask;
+package cn.bjca.footstone.logmask.encrypt;
 
-import cn.bjca.footstone.logmask.encrypt.Util;
 import lombok.SneakyThrows;
 import org.junit.Test;
 

@@ -2,8 +2,8 @@ package cn.bjca.footstone.logmask.logback;
 
 import ch.qos.logback.classic.PatternLayout;
 import ch.qos.logback.classic.spi.ILoggingEvent;
-import cn.bjca.footstone.logmask.Clz;
 import cn.bjca.footstone.logmask.Config;
+import cn.bjca.footstone.logmask.impl.Clz;
 import lombok.Data;
 import lombok.val;
 
@@ -27,7 +27,6 @@ public class Layout extends PatternLayout {
   @Override
   public void start() {
     config.set(Clz.loadXML(logmask, Config.class).setup());
-
     super.start();
   }
 
