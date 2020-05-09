@@ -8,7 +8,7 @@ mask sensitive in the log
 
 logmask.xml配置文件
 
-> 注：请放置于于`classpath`，对应于maven工程结构的`src/main/resources`文件夹内，内
+> 注：请放置于`classpath`，对应于maven工程结构的`src/main/resources`文件夹内   
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -45,7 +45,7 @@ logmask.xml配置文件
 
 logmask.rules规则配置文件:
 
-> 注：请放置于于`classpath`，对应于maven工程结构的`src/main/resources`文件夹内，内
+> 注：请放置于`classpath`，对应于maven工程结构的`src/main/resources`文件夹内
 
 ```
 # 姓名 匹配正则表达式与脱敏替换形式
