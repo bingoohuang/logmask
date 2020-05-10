@@ -10,7 +10,7 @@
 
     <appender name="STDOUT2" class="org.apache.log4j.ConsoleAppender">
         <param name="target" value="System.out"/>
-        <layout class="cn.bjca.footstone.logmask.log4j.Layout">
+        <layout class="com.github.bingoohuang.logmask.log4j.Layout">
             <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5p %C:%L - 脱敏后 %m%n"/>
         </layout>
     </appender>

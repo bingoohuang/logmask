@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
     <property scope="context" name="logmask" value="logmask.xml"/>
-    <conversionRule conversionWord="masklog" converterClass="cn.bjca.footstone.logmask.logback.Converter"/>
+    <conversionRule conversionWord="masklog" converterClass="com.github.bingoohuang.logmask.logback.Converter"/>
 
     <property name="PATTERN0"
               value="%d{yyyy-MM-dd HH:mm:ss.SSS} PATTERN3 %highlight(%-5p) [%t] %cyan(%logger) 脱敏前: %m%n"/>
