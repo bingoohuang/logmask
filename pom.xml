@@ -2,13 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.bjca.footstone</groupId>
+    <groupId>com.github.bingoohuang</groupId>
     <artifactId>logmask</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>log mask</name>
-    <description>a log mask inplementattion for incentive information in the log</description>
+    <description>a log mask implementation for incentive information in the log</description>
     <url>http://github.com/bingoohuang/logmask</url>
 
     <repositories>
