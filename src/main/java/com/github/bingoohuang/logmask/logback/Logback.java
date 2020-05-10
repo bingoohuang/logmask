@@ -3,6 +3,7 @@ package com.github.bingoohuang.logmask.logback;
 import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.util.StatusPrinter;
+import com.github.bingoohuang.logmask.impl.Clz;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -23,7 +24,7 @@ public class Logback {
    */
   @SneakyThrows
   public static void config(String classpathLogbackXmlFile) {
-    @Cleanup val fileStream = classpathResource(classpathLogbackXmlFile);
+    @Cleanup val fileStream = Clz.loadRes(classpathLogbackXmlFile);
     if (fileStream != null) {
       config(fileStream);
       return;
@@ -45,9 +46,5 @@ public class Logback {
     configurator.doConfigure(configStream);
 
     StatusPrinter.printInCaseOfErrorsOrWarnings(context);
-  }
-
-  public static InputStream classpathResource(String resourceName) {
-    return Logback.class.getClassLoader().getResourceAsStream(resourceName);
   }
 }

@@ -8,6 +8,7 @@ import lombok.val;
 import javax.xml.bind.JAXBContext;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -50,6 +51,10 @@ public class Clz {
    */
   public InputStream loadRes(String classpath) {
     return Clz.class.getClassLoader().getResourceAsStream(classpath);
+  }
+
+  public URL loadURL(String classpath) {
+    return Clz.class.getClassLoader().getResource(classpath);
   }
 
   @SneakyThrows

@@ -1,17 +1,12 @@
 package com.github.bingoohuang.logmask.log4j;
 
+import com.github.bingoohuang.logmask.impl.Clz;
 import lombok.experimental.UtilityClass;
 import org.apache.log4j.xml.DOMConfigurator;
-
-import java.net.URL;
 
 @UtilityClass
 public class Log4j {
   public void config(String classpathConfigFile) {
-    DOMConfigurator.configure(classpathResource(classpathConfigFile));
-  }
-
-  public URL classpathResource(String resourceName) {
-    return Log4j.class.getClassLoader().getResource(resourceName);
+    DOMConfigurator.configure(Clz.loadURL(classpathConfigFile));
   }
 }

@@ -20,14 +20,14 @@ public class MaskSerializer extends JsonSerializer<String> implements Contextual
 
   @Override
   public void serialize(String o, JsonGenerator jg, SerializerProvider sp) throws IOException {
-//    if (mask == null) {
-//      jg.writeObject(o);
-//      return;
-//    }
+    //    if (mask == null) {
+    //      jg.writeObject(o);
+    //      return;
+    //    }
 
-//    if (mask.ignore()) {
-//      return;
-//    }
+    //    if (mask.ignore()) {
+    //      return;
+    //    }
 
     //    jg.writeObject(Rules.mask(o, mask.rule()));
   }
