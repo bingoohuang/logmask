@@ -17,10 +17,8 @@ public class Config {
   @XmlTransient private Rules parsedRules;
 
   public Config setup() {
-    if (this.rules != null) {
-      // 解析规则文件中的正则替换规则
-      this.parsedRules = Rules.load(this.rules);
-    }
+    // 解析规则文件中的正则替换规则
+    parsedRules = Rules.load(rules);
 
     for (val m : this.mask) {
       m.setup();
@@ -37,29 +35,19 @@ public class Config {
   @Data
   public static class Mask {
     private String pattern;
-
-    @XmlTransient private Pattern compiled;
-
     private int leftKeep;
     private int rightKeep;
     private String keep;
     private String mask;
     private boolean keepMasksLength;
-    private boolean boundary;
     private String keys;
 
-    public Mask setup() {
-      if (this.mask == null) {
-        this.mask = LogMask.DEFAULT_MASK;
-      }
+    @XmlTransient
+    private Pattern compiled;
 
-      if (this.pattern != null) {
-        String p = pattern;
-        if (boundary) {
-          p = "\\b" + pattern + "\\b";
-        }
-        this.compiled = Pattern.compile(p, Pattern.MULTILINE);
-      }
+    public Mask setup() {
+      if (mask == null) mask = LogMask.DEFAULT_MASK;
+      if (pattern != null) compiled = Pattern.compile(pattern, Pattern.MULTILINE);
 
       return this;
     }

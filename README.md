@@ -23,17 +23,15 @@ logmask.xml配置文件
     <rules>logmask.rules</rules>
     <mask>
         <!-- pattern 定义匹配的正则表达式 -->
-        <pattern><![CDATA[\d{12}\d{3,5}[xX]?]]></pattern>
-        <!-- boundary 定义pattern做正则匹配时，是否需要两边设定边界 -->
-        <boundary>true</boundary>
+        <pattern><![CDATA[\b\d{12}\d{3,5}[xX]?\b]]></pattern>
 
         <!-- 指定json格式, key=value key:value形式的key，多个以空白分割 -->
         <keys>creditCard id name</keys>
 
-        <!-- 脱敏后的数据保留, eg. -->
-        <!-- 3: 首尾各保留3位原字符，例如abcdefg -> abc***efg -->
-        <!-- 0,3: 尾部留3位原字符，例如abcdefg -> ***efg -->
-        <!-- 3,0: 首部留3位原字符，例如abcdefg -> abc*** -->
+        <!-- 脱敏后的数据保留, 默认无保留. eg. -->
+        <!-- 3: 首尾各保留3位原字符，例如 abcdefg -> abc***efg -->
+        <!-- 0,3: 尾部留3位原字符，例如 abcdefg -> ***efg -->
+        <!-- 3,0: 首部留3位原字符，例如 abcdefg -> abc*** -->
         <keep>3</keep>
 
         <!-- mask定义脱敏后用于替换的掩码字符串 -->
@@ -43,8 +41,7 @@ logmask.xml配置文件
         <keepMasksLength>true</keepMasksLength>
     </mask>
     <mask>
-        <pattern><![CDATA[\d{5}]]></pattern>
-        <boundary>true</boundary>
+        <pattern><![CDATA[\b\d{5}\b]]></pattern>
     </mask>
 </config>
 ```

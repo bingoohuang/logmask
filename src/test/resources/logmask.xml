@@ -4,9 +4,7 @@
     <rules>logmask.rules</rules>
     <mask>
         <!-- pattern 定义匹配的正则表达式 -->
-        <pattern><![CDATA[\d{12}\d{3,5}[xX]?]]></pattern>
-        <!-- boundary 定义pattern做正则匹配时，是否需要两边设定边界 -->
-        <boundary>true</boundary>
+        <pattern><![CDATA[\b\d{12}\d{3,5}[xX]?\b]]></pattern>
 
         <!-- 指定json格式, key=value key:value形式的key，多个以空白分割 -->
         <keys>creditCard id name</keys>
@@ -24,7 +22,6 @@
         <keepMasksLength>true</keepMasksLength>
     </mask>
     <mask>
-        <pattern><![CDATA[\d{5}]]></pattern>
-        <boundary>true</boundary>
+        <pattern><![CDATA[\b\d{5}\b]]></pattern>
     </mask>
 </config>
