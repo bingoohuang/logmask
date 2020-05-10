@@ -136,6 +136,7 @@ public class ToStringTest {
 1. [日志脱敏 DestinyAries / log-tool](https://github.com/DestinyAries/log-tool)
 1. [github log desensitization search](https://github.com/search?p=2&q=log+desensitization&type=Code)
 1. [专治各种数据脱敏-Jackson-fastjson-logback](https://blog.csdn.net/qq_26418435/article/details/103620548)
+1. [Log4j2实现日志脱敏](https://github.com/191824852/desensitization)
 
 ## logback PatternLayout
 
