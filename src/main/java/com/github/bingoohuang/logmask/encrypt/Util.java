@@ -9,10 +9,12 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
+import java.security.Key;
 
 @UtilityClass
 public class Util {
   public final String K = "FUojtYy6ugs";
+  public final String DES_ALGORITHM = "DES";
 
   public String des(String src) {
     return des(src, K);
@@ -22,25 +24,33 @@ public class Util {
     return desDecode(src, K);
   }
 
-  @SneakyThrows
   public String des(String src, String key) {
-    val c = Cipher.getInstance("DES");
-    c.init(Cipher.ENCRYPT_MODE, parseKey("DES", key));
+    return des(src, parseKey(DES_ALGORITHM, key));
+  }
+
+  @SneakyThrows
+  public String des(String src, Key key) {
+    val c = Cipher.getInstance(DES_ALGORITHM);
+    c.init(Cipher.ENCRYPT_MODE, key);
 
     return base64(c.doFinal(src.getBytes("UTF8")));
   }
 
-  @SneakyThrows
   public String desDecode(String src, String key) {
-    val c = Cipher.getInstance("DES");
-    c.init(Cipher.DECRYPT_MODE, parseKey("DES", key));
+    return desDecode(src, parseKey(DES_ALGORITHM, key));
+  }
+
+  @SneakyThrows
+  public String desDecode(String src, Key key) {
+    val c = Cipher.getInstance(DES_ALGORITHM);
+    c.init(Cipher.DECRYPT_MODE, key);
 
     return new String(c.doFinal(base64Decode(src)), "UTF8");
   }
 
   @SneakyThrows
   public String desKey() {
-    return Util.generateKey("DES");
+    return Util.generateKey(DES_ALGORITHM);
   }
 
   @SneakyThrows

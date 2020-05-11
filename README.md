@@ -96,7 +96,7 @@ public class ToStringTest {
 输出：
 
 ```log
-2020-05-09 16:34:28.743 INFO  [main] cn.bjca.footstone.logmask.json.ToStringTest : request params: cn.bjca.footstone.logmask.json.Req(receiveCardNo=___, mobNo=186****2222, email=bingoo.******@gmail.com, address=beijing) 
+2020-05-09 16:34:28.743 INFO  [main] cn.footstone.logmask.json.ToStringTest : request params: cn.bjca.footstone.logmask.json.Req(receiveCardNo=___, mobNo=186****2222, email=bingoo.******@gmail.com, address=beijing) 
 ```
 
 ## design

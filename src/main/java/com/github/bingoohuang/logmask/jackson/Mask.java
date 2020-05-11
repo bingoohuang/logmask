@@ -11,7 +11,7 @@ import java.lang.annotation.Target;
 /**
  * Jackson序列化field注解.
  *
- * @author bingoobjca
+ * @author bingoohuang
  */
 @Target({ElementType.FIELD, ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

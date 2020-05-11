@@ -14,7 +14,7 @@
         </encoder>
     </appender>
 
-    <logger name="cn.bjca.footstone" level="info" additivity="false">
+    <logger name="com.github.bingoohuang" level="info" additivity="false">
         <appender-ref ref="Console2"/>
         <appender-ref ref="Console1"/>
     </logger>

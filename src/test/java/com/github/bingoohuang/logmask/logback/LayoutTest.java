@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import static org.junit.Assert.assertFalse;
+
 @Slf4j
 public class LayoutTest {
   @BeforeClass
@@ -28,7 +30,8 @@ public class LayoutTest {
     val city = mapper.writeValueAsString(new Person.City("bei\\\":\\\"jing", "beijing", 10));
     val addr = mapper.writeValueAsString(new Person.Addr(city, 100100));
     val bean = mapper.writeValueAsString(new Person.Bean("bingo\\\":\\\"ohuang", 100, addr));
-    log.info("bean：{}", bean);
+    log.warn("bean：{}", bean);
+    assertFalse(bean.isEmpty());
   }
 
   @Data

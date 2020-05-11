@@ -1,5 +1,8 @@
 package com.github.bingoohuang.logmask;
 
+import com.github.bingoohuang.logmask.encrypt.DesEncrypter;
+import com.github.bingoohuang.logmask.encrypt.Encrypter;
+import com.github.bingoohuang.logmask.encrypt.Util;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -81,6 +84,7 @@ public class Config {
     // 3,0: 首部留3位原字符，例如 abcdefg -> abc***
     private String keep;
 
+    @XmlTransient private Encrypter encrypter;
     @XmlTransient private Pattern compiled;
     @XmlTransient private int leftKeep;
     @XmlTransient private int rightKeep;
@@ -88,6 +92,9 @@ public class Config {
     @XmlTransient private int maskLength = -2;
 
     public Mask setup(Map<String, Mask> rules) {
+      if (encrypt != null) {
+        setupEncrypt(encrypt);
+      }
       if (mask == null) mask = LogMask.DEFAULT_MASK;
       if (pattern != null) compiled = Pattern.compile(pattern, Pattern.MULTILINE);
 
@@ -184,39 +191,15 @@ public class Config {
         }
 
         // key:value or key=value
-        if (LogMask.isBlankChar(leftChar) && (rightChar == ':' || rightChar == '=')) {
-          sb.append(rightChar);
-
-          int valueEnd = src.indexOf(", ", next + key.length());
-          if (valueEnd < 0) {
-            valueEnd = src.indexOf(')', next + key.length());
-          }
-
-          if (valueEnd > 0) {
-            String value = src.substring(next + key.length() + 1, valueEnd);
-            sb.append(this.mask(value));
-            start = valueEnd;
-            continue;
-          }
-
-          String value = src.substring(next + key.length() + 1);
-          sb.append(this.mask(value));
-          break;
+        if (isToStringKey(leftChar, rightChar)) {
+          start = processToString(key, src, sb, next, rightChar);
+          if (start < 0) break;
+          continue;
         }
 
         // JSON
-        if (LogMask.isQuoteChar(leftChar) && LogMask.isQuoteChar(rightChar)) {
-          int valueStart = src.indexOf(':', next + key.length());
-          String keyQuote = src.substring(next + key.length(), valueStart);
-          int valueEnd = src.indexOf(keyQuote + ",", valueStart + keyQuote.length() + 1);
-          if (valueEnd < 0) {
-            valueEnd = src.indexOf(keyQuote + "}", valueStart + keyQuote.length() + 1);
-          }
-
-          String value = src.substring(valueStart + keyQuote.length() + 1, valueEnd);
-          sb.append(src, next + key.length(), valueStart + keyQuote.length() + 1);
-          sb.append(this.mask(value));
-          start = valueEnd;
+        if (isJSONKey(leftChar, rightChar)) {
+          start = processJSON(key, src, sb, next);
           continue;
         }
 
@@ -226,7 +209,54 @@ public class Config {
       return sb.toString();
     }
 
+    private int processJSON(String key, String src, StringBuilder sb, int next) {
+      int valueStart = src.indexOf(':', next + key.length());
+      String keyQuote = src.substring(next + key.length(), valueStart);
+      int valueEnd = src.indexOf(keyQuote + ",", valueStart + keyQuote.length() + 1);
+      if (valueEnd < 0) {
+        valueEnd = src.indexOf(keyQuote + "}", valueStart + keyQuote.length() + 1);
+      }
+
+      String value = src.substring(valueStart + keyQuote.length() + 1, valueEnd);
+      sb.append(src, next + key.length(), valueStart + keyQuote.length() + 1);
+      sb.append(this.maskResult(value));
+      return valueEnd;
+    }
+
+    private int processToString(
+        String key, String src, StringBuilder sb, int next, char rightChar) {
+      sb.append(rightChar);
+
+      int valueEnd = src.indexOf(", ", next + key.length());
+      if (valueEnd < 0) {
+        valueEnd = src.indexOf(')', next + key.length());
+      }
+
+      if (valueEnd > 0) {
+        String value = src.substring(next + key.length() + 1, valueEnd);
+        sb.append(this.maskResult(value));
+        return valueEnd;
+      }
+
+      String value = src.substring(next + key.length() + 1);
+      sb.append(this.maskResult(value));
+
+      return -1;
+    }
+
+    private boolean isJSONKey(char leftChar, char rightChar) {
+      return LogMask.isQuoteChar(leftChar) && LogMask.isQuoteChar(rightChar);
+    }
+
+    private boolean isToStringKey(char leftChar, char rightChar) {
+      return LogMask.isBlankChar(leftChar) && (rightChar == ':' || rightChar == '=');
+    }
+
     public String maskResult(String s) {
+      if (this.encrypter != null) {
+        return this.encrypter.encrypt(s);
+      }
+
       val maskLen = s.length() - leftKeep - rightKeep;
       if (s.length() < mask.length() || maskLen <= 0) {
         return mask;
@@ -279,6 +309,40 @@ public class Config {
         if (parts.length >= 3) {
           this.maskLength = Integer.parseInt(parts[2]);
         }
+      }
+    }
+
+    private void setupEncrypt(String config) {
+      String algorithm = config;
+
+      int p = config.indexOf(':');
+      String options = "";
+      if (p > 0) {
+        algorithm = config.substring(0, p);
+        options = config.substring(p + 1);
+      }
+
+      if (algorithm.equalsIgnoreCase(Util.DES_ALGORITHM)) {
+        String k = options;
+        if (options.isEmpty()) {
+          k = Util.K;
+        }
+
+        Encrypter enc = new DesEncrypter();
+        enc.setup(k);
+
+        this.encrypter = enc;
+
+        return;
+      }
+
+      try {
+        Encrypter enc = (Encrypter) Class.forName(algorithm).newInstance();
+        enc.setup(options);
+
+        this.encrypter = enc;
+      } catch (Exception ex) {
+        log.warn("failed to initiate encrypter", ex);
       }
     }
   }

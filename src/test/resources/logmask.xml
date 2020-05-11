@@ -5,7 +5,7 @@
         <pattern><![CDATA[\b\d{12}\d{3,5}[xX]?\b]]></pattern>
 
         <!-- 指定json格式, key=value key:value形式的key，多个以空白分割 -->
-        <keys>creditCard id name</keys>
+        <keys>id</keys>
 
         <!-- mask定义脱敏后用于替换的掩码字符串 -->
         <mask>***</mask>
@@ -15,6 +15,11 @@
         <!-- 0.3: 尾部留3位原字符，例如abcdefg -> ***efg -->
         <!-- 3.0: 首部留3位原字符，例如abcdefg -> abc*** -->
         <keep>3</keep>
+    </mask>
+
+    <mask>
+        <keys>name creditCard</keys>
+        <encrypt>des</encrypt>
     </mask>
     <mask>
         <pattern><![CDATA[\b\d{5}\b]]></pattern>
@@ -29,6 +34,7 @@
     <mask>
         <rule>MOBILE</rule> <!-- 手机号-->
         <pattern><![CDATA[(\d{3})\d{4}(\d{4})]]></pattern>
+        <encrypt>des</encrypt>
     </mask>
     <mask>
         <rule>EMAIL</rule> <!-- 邮箱-->

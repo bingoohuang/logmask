@@ -14,7 +14,7 @@ import lombok.val;
 /**
  * 用于生成子类的StringDesc
  *
- * @author bingoobjca
+ * @author bingoohuang
  */
 @Slf4j
 @Data

@@ -8,7 +8,7 @@ import java.lang.annotation.Target;
 /**
  * Mask注解，用于类动态生成toString方法使用。
  *
- * @author bingoobjca
+ * @author bingoohuang
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.FIELD, ElementType.TYPE})

@@ -6,6 +6,7 @@ import ch.qos.logback.core.util.StatusPrinter;
 import com.github.bingoohuang.logmask.impl.Clz;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
 import lombok.val;
 import org.slf4j.LoggerFactory;
 
@@ -14,8 +15,9 @@ import java.io.InputStream;
 /**
  * Logback指定XML配置文件
  *
- * @author bingoobjca
+ * @author bingoohuang
  */
+@UtilityClass
 public class Logback {
   /**
    * 通过指定类路径上的XML配置文件设置Logback的全局配置。
@@ -23,7 +25,7 @@ public class Logback {
    * @param classpathLogbackXmlFile 类路径上的XML配置文件名称。
    */
   @SneakyThrows
-  public static void config(String classpathLogbackXmlFile) {
+  public void config(String classpathLogbackXmlFile) {
     @Cleanup val fileStream = Clz.loadRes(classpathLogbackXmlFile);
     if (fileStream != null) {
       config(fileStream);
@@ -34,7 +36,7 @@ public class Logback {
   }
 
   @SneakyThrows
-  public static void config(InputStream configStream) {
+  public void config(InputStream configStream) {
     // assume SLF4J is bound to logback in the current environment
     val context = (LoggerContext) LoggerFactory.getILoggerFactory();
 

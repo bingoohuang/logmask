@@ -1,5 +1,6 @@
 package com.github.bingoohuang.logmask;
 
+import com.github.bingoohuang.logmask.encrypt.Util;
 import com.github.bingoohuang.logmask.impl.Clz;
 import lombok.SneakyThrows;
 import lombok.val;
@@ -15,6 +16,10 @@ public class ConfigTest {
     val config = Clz.loadXML("logmask.xml", Config.class);
 
     assertTrue(config.getMask().size() > 0);
+
+    assertEquals(
+        "creditCard=" + Util.des("12345678910", Util.K),
+        config.setup().mask("creditCard=12345678910"));
   }
 
   @Test
