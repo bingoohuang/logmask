@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <config>
-    <!-- rules定义 JSON序列化与toString序列化JavaBean时的规则 -->
-    <rules>logmask.rules</rules>
     <mask>
         <!-- pattern 定义匹配的正则表达式 -->
         <pattern><![CDATA[\b\d{12}\d{3,5}[xX]?\b]]></pattern>
@@ -14,11 +12,34 @@
 
         <!-- 脱敏后的数据保留, eg. -->
         <!-- 3: 首尾各保留3位原字符，例如abcdefg -> abc***efg -->
-        <!-- 0,3: 尾部留3位原字符，例如abcdefg -> ***efg -->
-        <!-- 3,0: 首部留3位原字符，例如abcdefg -> abc*** -->
+        <!-- 0.3: 尾部留3位原字符，例如abcdefg -> ***efg -->
+        <!-- 3.0: 首部留3位原字符，例如abcdefg -> abc*** -->
         <keep>3</keep>
     </mask>
     <mask>
         <pattern><![CDATA[\b\d{5}\b]]></pattern>
+    </mask>
+
+    <mask>
+        <!-- rule表示JSON序列化与toString序列化JavaBean时，可以被引用的规则名称 -->
+        <rule>NAME</rule> <!-- 姓名-->
+        <pattern>([\u4E00-\u9FA5]{1})[\u4E00-\u9FA5]{1,}</pattern>
+        <replace>$1**</replace>
+    </mask>
+    <mask>
+        <rule>MOBILE</rule> <!-- 手机号-->
+        <pattern>(\d{3})\d{4}(\d{4})</pattern>
+        <replace>$100000000</replace>
+    </mask>
+
+    <mask>
+        <rule>EMAIL</rule> <!-- 邮箱-->
+        <pattern>(\w+)(@\w+)</pattern>
+        <replace>******$2</replace>
+    </mask>
+
+    <mask>
+        <rule>CARDNO</rule> <!-- 卡号-->
+        <pattern>(\w{4})(\w{4})(\w{4})(\w{4})</pattern>
     </mask>
 </config>

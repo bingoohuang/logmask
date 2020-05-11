@@ -23,7 +23,7 @@ public class ToString {
   protected Config conf;
 
   public String mask(Object obj, String rule) {
-    return conf.getParsedRules().mask(obj, rule);
+    return conf.ruleMask(obj, rule);
   }
 
   public static ToString create(Class<?> clazz) {

@@ -1,8 +1,8 @@
 package com.github.bingoohuang.logmask.json;
 
 import com.alibaba.fastjson.serializer.ValueFilter;
+import com.github.bingoohuang.logmask.Config;
 import com.github.bingoohuang.logmask.Mask;
-import com.github.bingoohuang.logmask.Rules;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MaskValueFilter implements ValueFilter {
-  protected Rules rules;
+  protected Config config;
 
   @Override
   public Object process(Object object, String name, Object value) {
@@ -35,7 +35,7 @@ public class MaskValueFilter implements ValueFilter {
         return null;
       }
 
-      return rules.mask(value, mask.rule());
+      return config.ruleMask(value, mask.rule());
     } catch (Exception e) {
       log.warn("exception object class {} name {}", object.getClass(), name, e);
     }

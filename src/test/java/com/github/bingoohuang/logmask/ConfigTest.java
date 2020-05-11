@@ -20,45 +20,44 @@ public class ConfigTest {
   @Test
   public void mask() {
     Config.Mask mask = new Config.Mask();
-    mask.setKeep("3,3,-1");
+    mask.setKeep("3.3.-1");
     mask.setMask("###");
-    mask.setup();
-    assertEquals("hel##########ang", mask.replace("hellobingoohuang"));
+    mask.setup(null);
+    assertEquals("hel##########ang", mask.maskResult("hellobingoohuang"));
 
     mask = new Config.Mask();
-    mask.setKeep("3,3");
+    mask.setKeep("3.3");
     mask.setMask("###");
-    mask.setup();
-    assertEquals("hel###ang", mask.replace("hellobingoohuang"));
+    mask.setup(null);
+    assertEquals("hel###ang", mask.maskResult("hellobingoohuang"));
 
     mask = new Config.Mask();
-    mask.setKeep("3,3,-2");
+    mask.setKeep("3.3.-2");
     mask.setMask("###");
-    mask.setup();
-    assertEquals("hel###ang", mask.replace("hellobingoohuang"));
+    mask.setup(null);
+    assertEquals("hel###ang", mask.maskResult("hellobingoohuang"));
 
     mask = new Config.Mask();
-    mask.setKeep("3,3,0");
+    mask.setKeep("3.3.0");
     mask.setMask("###");
-    mask.setup();
-    assertEquals("helang", mask.replace("hellobingoohuang"));
+    mask.setup(null);
+    assertEquals("helang", mask.maskResult("hellobingoohuang"));
 
     mask = new Config.Mask();
-    mask.setKeep("3,3,1");
+    mask.setKeep("3.3.1");
     mask.setMask("###");
-    mask.setup();
-    assertEquals("hel#ang", mask.replace("hellobingoohuang"));
+    mask.setup(null);
+    assertEquals("hel#ang", mask.maskResult("hellobingoohuang"));
 
     mask = new Config.Mask();
-    mask.setKeep("3,3,4");
+    mask.setKeep("3.3.4");
     mask.setMask("###");
-    mask.setup();
-    assertEquals("hel####ang", mask.replace("hellobingoohuang"));
+    assertEquals("hel####ang", mask.maskResult("hellobingoohuang"));
 
     mask = new Config.Mask();
-    mask.setKeep("3,3,11");
+    mask.setKeep("3.3.11");
     mask.setMask("###");
-    mask.setup();
-    assertEquals("hel###########ang", mask.replace("hellobingoohuang"));
+    mask.setup(null);
+    assertEquals("hel###########ang", mask.maskResult("hellobingoohuang"));
   }
 }
