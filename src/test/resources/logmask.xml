@@ -17,9 +17,6 @@
         <!-- 0,3: 尾部留3位原字符，例如abcdefg -> ***efg -->
         <!-- 3,0: 首部留3位原字符，例如abcdefg -> abc*** -->
         <keep>3</keep>
-
-        <!-- keepMasksLength表示掩码长度是否与原始字符串长度一样长 -->
-        <keepMasksLength>true</keepMasksLength>
     </mask>
     <mask>
         <pattern><![CDATA[\b\d{5}\b]]></pattern>

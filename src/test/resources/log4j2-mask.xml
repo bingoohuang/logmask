@@ -3,7 +3,7 @@
     <properties>
         <property name="PATTERN">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t-%L] %-5level %logger{36} [log4j2] - %msg%n</property>
     </properties>
-
+    <!--
     <appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <PatternLayout pattern="${PATTERN}"/>
@@ -14,6 +14,7 @@
             <SizeBasedTriggeringPolicy size="5 MB"/>
         </RollingFile>
     </appenders>
+    -->
     <loggers>
         <root level="DEBUG">
             <appender-ref ref="Console"/>

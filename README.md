@@ -36,9 +36,6 @@ logmask.xml配置文件
 
         <!-- mask定义脱敏后用于替换的掩码字符串 -->
         <mask>***</mask>
-
-        <!-- keepMasksLength表示掩码长度是否与原始字符串长度一样长 -->
-        <keepMasksLength>true</keepMasksLength>
     </mask>
     <mask>
         <pattern><![CDATA[\b\d{5}\b]]></pattern>

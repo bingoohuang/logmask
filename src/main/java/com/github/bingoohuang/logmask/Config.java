@@ -35,15 +35,13 @@ public class Config {
   @Data
   public static class Mask {
     private String pattern;
-    private int leftKeep;
-    private int rightKeep;
-    private String keep;
-    private String mask;
-    private boolean keepMasksLength;
     private String keys;
+    private String mask;
+    private String keep;
 
-    @XmlTransient
-    private Pattern compiled;
+    @XmlTransient private Pattern compiled;
+    @XmlTransient private int leftKeep;
+    @XmlTransient private int rightKeep;
 
     public Mask setup() {
       if (mask == null) mask = LogMask.DEFAULT_MASK;
@@ -65,13 +63,7 @@ public class Config {
         sb.append(s, 0, leftKeep);
       }
 
-      if (keepMasksLength) {
-        for (int i = 0, j = maskLength / mask.length(); i < j; i++) {
-          sb.append(mask);
-        }
-      } else {
-        sb.append(mask);
-      }
+      sb.append(mask);
 
       if (rightKeep > 0) {
         sb.append(s.substring(s.length() - rightKeep));

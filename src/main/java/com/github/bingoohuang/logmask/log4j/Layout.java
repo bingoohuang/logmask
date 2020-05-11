@@ -10,13 +10,10 @@ import org.apache.log4j.PatternLayout;
 import org.apache.log4j.spi.LoggingEvent;
 
 public class Layout extends PatternLayout {
-  @Accessors
-  private final String logmask = "logmask.xml";
+  @Accessors private final String logmask = "logmask.xml";
   private Config config;
 
-  /**
-   * 所有的参数已经设置完毕后调用
-   */
+  /** 所有的参数已经设置完毕后调用 */
   @Override
   public void activateOptions() {
     super.activateOptions();

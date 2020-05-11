@@ -67,13 +67,12 @@ public class ToString {
         String fName = field.getName();
 
         sb.append("sb.append(\"")
-                .append(fName)
-                .append("=\" +mask(((")
-                .append(bClass)
-                .append(")bean).")
-                .append("get")
-                .append(capital(fName))
-                .append("(), ");
+            .append(fName)
+            .append("=\" +mask(((")
+            .append(bClass)
+            .append(")bean).get")
+            .append(capital(fName))
+            .append("(), ");
 
         if (mask != null) {
           sb.append('"').append(mask.rule()).append("\"));");
