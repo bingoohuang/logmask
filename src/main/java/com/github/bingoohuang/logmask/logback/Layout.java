@@ -1,6 +1,5 @@
 package com.github.bingoohuang.logmask.logback;
 
-import ch.qos.logback.classic.PatternLayout;
 import com.github.bingoohuang.logmask.Config;
 import com.github.bingoohuang.logmask.impl.Clz;
 import lombok.Data;
@@ -9,7 +8,7 @@ import lombok.val;
 import java.util.Map;
 
 @Data
-public class Layout extends PatternLayout {
+public class Layout extends ch.qos.logback.classic.PatternLayout {
   public static final ThreadLocal<Config> config = new InheritableThreadLocal<Config>();
   private String logmask = "logmask.xml";
 
