@@ -39,21 +39,21 @@ logmask.xml配置文件
         <pattern><![CDATA[\b\d{5}\b]]></pattern>
     </mask>
 
-      <mask>
-          <!-- rule表示JSON序列化与toString序列化JavaBean时，可以被引用的规则名称 -->
-          <rule>NAME</rule> <!-- 姓名-->
-          <pattern><![CDATA[([\u4E00-\u9FA5]{1})[\u4E00-\u9FA5]{1,}]]></pattern>
-          <replace>$1**</replace>
-      </mask>
-      <mask>
-          <rule>MOBILE</rule> <!-- 手机号-->
-          <pattern><![CDATA[(\d{3})\d{4}(\d{4})]]></pattern>
-      </mask>
-      <mask>
-          <rule>EMAIL</rule> <!-- 邮箱-->
-          <pattern><![CDATA[(\w+)(@\w+)]]></pattern>
-          <replace>******$2</replace>
-      </mask>
+    <mask>
+      <!-- rule表示JSON序列化与toString序列化JavaBean时，可以被引用的规则名称 -->
+      <rule>NAME</rule> <!-- 姓名-->
+      <pattern><![CDATA[([\u4E00-\u9FA5]{1})[\u4E00-\u9FA5]{1,}]]></pattern>
+      <replace>$1**</replace>
+    </mask>
+    <mask>
+      <rule>MOBILE</rule> <!-- 手机号-->
+      <pattern><![CDATA[(\d{3})\d{4}(\d{4})]]></pattern>
+    </mask>
+    <mask>
+      <rule>EMAIL</rule> <!-- 邮箱-->
+      <pattern><![CDATA[(\w+)(@\w+)]]></pattern>
+      <replace>******$2</replace>
+    </mask>
 </config>
 ```
 
