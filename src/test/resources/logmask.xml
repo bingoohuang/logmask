@@ -23,16 +23,16 @@
     <mask>
         <!-- rule表示JSON序列化与toString序列化JavaBean时，可以被引用的规则名称 -->
         <rule>NAME</rule> <!-- 姓名-->
-        <pattern>([\u4E00-\u9FA5]{1})[\u4E00-\u9FA5]{1,}</pattern>
+        <pattern><![CDATA[([\u4E00-\u9FA5]{1})[\u4E00-\u9FA5]{1,}]]></pattern>
         <replace>$1**</replace>
     </mask>
     <mask>
         <rule>MOBILE</rule> <!-- 手机号-->
-        <pattern>(\d{3})\d{4}(\d{4})</pattern>
+        <pattern><![CDATA[(\d{3})\d{4}(\d{4})]]></pattern>
     </mask>
     <mask>
         <rule>EMAIL</rule> <!-- 邮箱-->
-        <pattern>(\w+)(@\w+)</pattern>
+        <pattern><![CDATA[(\w+)(@\w+)]]></pattern>
         <replace>******$2</replace>
     </mask>
 </config>
