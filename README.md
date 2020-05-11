@@ -70,7 +70,7 @@ public class Req {
   @Mask(rule = "EMAIL")
   private String email;
 
-  @Mask(ignore = true)
+  @Mask(empty = true)
   private String payPasswd;
 
   private String address;

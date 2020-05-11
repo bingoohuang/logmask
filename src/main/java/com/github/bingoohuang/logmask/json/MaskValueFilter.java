@@ -31,7 +31,7 @@ public class MaskValueFilter implements ValueFilter {
         return value;
       }
 
-      if (mask.ignore()) {
+      if (mask.empty()) {
         return null;
       }
 

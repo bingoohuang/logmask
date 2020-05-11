@@ -55,7 +55,7 @@ public class ToString {
 
       for (CtField field : beanCt.getDeclaredFields()) {
         val mask = (Mask) field.getAnnotation(Mask.class);
-        if (mask != null && mask.ignore()) {
+        if (mask != null && mask.empty()) {
           continue;
         }
 

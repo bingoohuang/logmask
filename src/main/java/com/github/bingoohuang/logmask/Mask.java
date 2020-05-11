@@ -25,5 +25,5 @@ public @interface Mask {
    *
    * @return true/false
    */
-  boolean ignore() default false;
+  boolean empty() default false;
 }
