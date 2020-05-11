@@ -34,7 +34,7 @@ logmask.xml配置文件
         <!-- 3,0: 首部留3位原字符，例如 abcdefg -> abc*** -->
         <keep>3</keep>
 
-        <!-- mask定义脱敏后用于替换的掩码字符串 -->
+        <!-- mask定义脱敏后用于替换的掩码字符串，默认为___ -->
         <mask>***</mask>
     </mask>
     <mask>

@@ -42,6 +42,8 @@ public class Config {
     @XmlTransient private Pattern compiled;
     @XmlTransient private int leftKeep;
     @XmlTransient private int rightKeep;
+    /** 掩码长度: -2：直接是掩码长度 -1: 原始长度 >= 0: 指定长度 */
+    @XmlTransient private int maskLength = -2;
 
     public Mask setup() {
       if (mask == null) mask = LogMask.DEFAULT_MASK;
@@ -63,13 +65,32 @@ public class Config {
         sb.append(s, 0, leftKeep);
       }
 
-      sb.append(mask);
+      if (this.maskLength == -2) {
+        sb.append(mask);
+      } else if (this.maskLength == -1) {
+        appendLength(maskLength, sb);
+      } else if (this.maskLength >= 0) {
+        appendLength(this.maskLength, sb);
+      } else {
+        sb.append(mask);
+      }
 
       if (rightKeep > 0) {
         sb.append(s.substring(s.length() - rightKeep));
       }
 
       return sb.toString();
+    }
+
+    private void appendLength(int maskLength, StringBuilder sb) {
+      for (int i = 0, j = maskLength / mask.length(); i < j; i++) {
+        sb.append(mask);
+      }
+
+      int leftLength = maskLength % mask.length();
+      if (leftLength > 0) {
+        sb.append(mask, 0, leftLength);
+      }
     }
 
     public void setKeep(String keep) {
@@ -81,6 +102,10 @@ public class Config {
       } else if (parts.length >= 2) {
         this.leftKeep = Integer.parseInt(parts[0]);
         this.rightKeep = Integer.parseInt(parts[1]);
+
+        if (parts.length >= 3) {
+          this.maskLength = Integer.parseInt(parts[2]);
+        }
       }
     }
   }
