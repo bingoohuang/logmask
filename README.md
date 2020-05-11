@@ -19,8 +19,6 @@ logmask.xml配置文件
 ```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <config>
-    <!-- rules定义 JSON序列化与toString序列化JavaBean时的规则 -->
-    <rules>logmask.rules</rules>
     <mask>
         <!-- pattern 定义匹配的正则表达式 -->
         <pattern><![CDATA[\b\d{12}\d{3,5}[xX]?\b]]></pattern>
@@ -40,30 +38,24 @@ logmask.xml配置文件
     <mask>
         <pattern><![CDATA[\b\d{5}\b]]></pattern>
     </mask>
+
+    <mask>
+        <!-- rule表示JSON序列化与toString序列化JavaBean时，可以被引用的规则名称 -->
+        <rule>NAME</rule> <!-- 姓名-->
+        <pattern>([\u4E00-\u9FA5]{1})[\u4E00-\u9FA5]{1,}</pattern>
+        <replace>$1**</replace>
+    </mask>
+    <mask>
+        <rule>MOBILE</rule> <!-- 手机号-->
+        <pattern>(\d{3})\d{4}(\d{4})</pattern>
+        <replace>$100000000</replace>
+    </mask>
+    <mask>
+        <rule>EMAIL</rule> <!-- 邮箱-->
+        <pattern>(\w+)(@\w+)</pattern>
+        <replace>******$2</replace>
+    </mask>
 </config>
-```
-
-logmask.rules规则配置文件:
-
-> 注：请放置于`classpath`，对应于maven工程结构的`src/main/resources`文件夹内
-
-```
-# 姓名 匹配正则表达式与脱敏替换形式
-NAME_REG=([\u4E00-\u9FA5]{1})[\u4E00-\u9FA5]{1,}
-NAME_REPLACE=$1**
-
-# 手机号 匹配正则表达式与脱敏替换形式
-MOBILE_REG=(\d{3})\d{4}(\d{4})
-MOBILE_REPLACE=$1****$2
-
-# 邮箱 匹配正则表达式与脱敏替换形式
-EMAIL_REG=(\w+)(@\w+)
-EMAIL_REPLACE=******$2
-
-# 卡号 匹配正则表达式
-CARD_REG=(\w{4})(\w{4})(\w{4})(\w{4})
-# 不定义默认的替换形式时，使用全局的掩码___
-#CARD_REPLACE=$1*******$4
 ```
 
 对应的JavaBean定义样例:

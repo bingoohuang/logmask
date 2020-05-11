@@ -29,17 +29,10 @@
     <mask>
         <rule>MOBILE</rule> <!-- 手机号-->
         <pattern>(\d{3})\d{4}(\d{4})</pattern>
-        <replace>$100000000</replace>
     </mask>
-
     <mask>
         <rule>EMAIL</rule> <!-- 邮箱-->
         <pattern>(\w+)(@\w+)</pattern>
         <replace>******$2</replace>
-    </mask>
-
-    <mask>
-        <rule>CARDNO</rule> <!-- 卡号-->
-        <pattern>(\w{4})(\w{4})(\w{4})(\w{4})</pattern>
     </mask>
 </config>
