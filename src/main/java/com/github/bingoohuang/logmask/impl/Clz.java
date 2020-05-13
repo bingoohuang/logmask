@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -70,9 +71,9 @@ public class Clz {
   public byte[] inputStreamToByteArray(InputStream is) {
     byte[] targetArray = new byte[is.available()];
 
-    is.read(targetArray);
+    int n = is.read(targetArray);
 
-    return targetArray;
+    return Arrays.copyOfRange(targetArray, 0, n);
   }
 
   @SneakyThrows
