@@ -105,7 +105,7 @@ public class ToString {
   @SneakyThrows
   private static ToString newInstance(String className) {
     try {
-      return (ToString) Class.forName(className).newInstance();
+      return (ToString) Class.forName(className).getConstructor().newInstance();
     } catch (ClassNotFoundException ignore) {
       // ignore
     }

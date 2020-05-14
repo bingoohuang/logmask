@@ -13,8 +13,8 @@ import java.security.Key;
 
 @UtilityClass
 public class Util {
-  public final String K = "FUojtYy6ugs";
   public final String DES_ALGORITHM = "DES";
+  public final SecretKey K = parseKey(DES_ALGORITHM, "FUojtYy6ugs");
 
   public String des(String src) {
     return des(src, K);

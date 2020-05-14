@@ -249,7 +249,7 @@ public class Config {
     }
 
     private boolean isToStringKey(char leftChar, char rightChar) {
-      return LogMask.isBlankChar(leftChar) && (rightChar == ':' || rightChar == '=');
+      return LogMask.isBoundaryChar(leftChar) && (rightChar == ':' || rightChar == '=');
     }
 
     public String maskResult(String s) {
@@ -323,24 +323,14 @@ public class Config {
       }
 
       if (algorithm.equalsIgnoreCase(Util.DES_ALGORITHM)) {
-        String k = options;
-        if (options.isEmpty()) {
-          k = Util.K;
-        }
-
-        Encrypter enc = new DesEncrypter();
-        enc.setup(k);
-
-        this.encrypter = enc;
-
+        this.encrypter = new DesEncrypter();
+        this.encrypter.setup(options);
         return;
       }
 
       try {
-        Encrypter enc = (Encrypter) Class.forName(algorithm).newInstance();
-        enc.setup(options);
-
-        this.encrypter = enc;
+        this.encrypter = (Encrypter) Class.forName(algorithm).getConstructor().newInstance();
+        this.encrypter.setup(options);
       } catch (Exception ex) {
         log.warn("failed to initiate encrypter", ex);
       }

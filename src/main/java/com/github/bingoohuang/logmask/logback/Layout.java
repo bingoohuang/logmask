@@ -9,7 +9,7 @@ import java.util.Map;
 
 @Data
 public class Layout extends ch.qos.logback.classic.PatternLayout {
-  public static final ThreadLocal<Config> config = new InheritableThreadLocal<Config>();
+  public static final ThreadLocal<Config> CONFIG = new InheritableThreadLocal<Config>();
   private String logmask = "logmask.xml";
 
   @Override
@@ -24,13 +24,13 @@ public class Layout extends ch.qos.logback.classic.PatternLayout {
 
   @Override
   public void start() {
-    config.set(Clz.loadXML(logmask, Config.class).setup());
+    CONFIG.set(Clz.loadXML(logmask, Config.class).setup());
     super.start();
   }
 
   @Override
   public void stop() {
     super.stop();
-    config.remove();
+    CONFIG.remove();
   }
 }

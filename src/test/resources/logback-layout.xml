@@ -4,7 +4,6 @@
         <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
             <layout class="com.github.bingoohuang.logmask.logback.Layout">
                 <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36}:%L - 脱敏后 %m%n</pattern>
-                <logmask>logmask.xml</logmask>
             </layout>
         </encoder>
     </appender>

@@ -43,11 +43,7 @@ public class LogMask {
     return isBoundaryChar(l) && isBoundaryChar(r);
   }
 
-  public boolean isBlankChar(char c) {
-    return c == ' ' || c == '\t';
-  }
-
-  private boolean isBoundaryChar(char c) {
+  public boolean isBoundaryChar(char c) {
     return !(c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z' || c >= '0' && c <= '9');
   }
 }

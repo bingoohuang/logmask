@@ -13,7 +13,7 @@ import org.slf4j.helpers.MessageFormatter;
 public class Converter extends ClassicConverter {
   @Override
   public String convert(ILoggingEvent event) {
-    Config conf = Layout.config.get();
+    Config conf = Layout.CONFIG.get();
     if (conf == null) {
       val c = (LoggerContext) LoggerFactory.getILoggerFactory();
       String logmaskFile = c.getProperty("logmask");
@@ -22,11 +22,10 @@ public class Converter extends ClassicConverter {
       }
 
       conf = Clz.loadXML(logmaskFile, Config.class).setup();
-      Layout.config.set(conf);
+      Layout.CONFIG.set(conf);
     }
 
-    val msg = doConvert(conf, event);
-    return LogMask.mask(conf, msg);
+    return doConvert(conf, event);
   }
 
   private String doConvert(Config conf, ILoggingEvent e) {

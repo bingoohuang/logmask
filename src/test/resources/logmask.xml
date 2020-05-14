@@ -18,7 +18,11 @@
     </mask>
 
     <mask>
-        <keys>name creditCard</keys>
+        <keys>name</keys>
+        <encrypt>com.github.bingoohuang.logmask.encrypt.MyEncryptor:A</encrypt>
+    </mask>
+    <mask>
+        <keys>creditCard</keys>
         <encrypt>des</encrypt>
     </mask>
     <mask>

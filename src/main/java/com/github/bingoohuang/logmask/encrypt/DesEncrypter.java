@@ -7,7 +7,11 @@ public class DesEncrypter extends Encrypter {
 
   @Override
   public void setup(String option) {
-    key = Util.parseKey(Util.DES_ALGORITHM, option);
+    if (option.isEmpty()) {
+      key = Util.K;
+    } else {
+      key = Util.parseKey(Util.DES_ALGORITHM, option);
+    }
   }
 
   @Override
