@@ -4,13 +4,12 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.joran.JoranConfigurator;
 import ch.qos.logback.core.util.StatusPrinter;
 import com.github.bingoohuang.logmask.impl.Clz;
+import java.io.InputStream;
 import lombok.Cleanup;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 import org.slf4j.LoggerFactory;
-
-import java.io.InputStream;
 
 /**
  * Logback指定XML配置文件

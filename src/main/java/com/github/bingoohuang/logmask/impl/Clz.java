@@ -1,11 +1,5 @@
 package com.github.bingoohuang.logmask.impl;
 
-import lombok.Cleanup;
-import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
-import lombok.val;
-
-import javax.xml.bind.JAXBContext;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.net.URL;
@@ -13,6 +7,11 @@ import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import javax.xml.bind.JAXBContext;
+import lombok.Cleanup;
+import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
+import lombok.val;
 
 @UtilityClass
 public class Clz {

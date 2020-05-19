@@ -3,13 +3,12 @@ package com.github.bingoohuang.logmask.json;
 import com.alibaba.fastjson.serializer.ValueFilter;
 import com.github.bingoohuang.logmask.Config;
 import com.github.bingoohuang.logmask.Mask;
+import java.lang.reflect.Field;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-
-import java.lang.reflect.Field;
 
 @Slf4j
 @Data

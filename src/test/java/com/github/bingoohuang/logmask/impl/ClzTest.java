@@ -1,14 +1,13 @@
 package com.github.bingoohuang.logmask.impl;
 
+import static org.junit.Assert.assertTrue;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.junit.Test;
-
-import java.util.Map;
-
-import static org.junit.Assert.assertTrue;
 
 public class ClzTest {
   @Test

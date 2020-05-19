@@ -1,15 +1,14 @@
 package com.github.bingoohuang.logmask.encrypt;
 
-import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
-import lombok.val;
-
+import java.security.Key;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
-import java.security.Key;
+import lombok.SneakyThrows;
+import lombok.experimental.UtilityClass;
+import lombok.val;
 
 @UtilityClass
 public class Util {

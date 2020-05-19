@@ -5,10 +5,10 @@ import org.junit.Test;
 
 @lombok.extern.log4j.Log4j
 public class LayoutTest {
-    @BeforeClass
-    public static void beforeClass() {
-      Log4j.config("log4j-mask.xml");
-    }
+  @BeforeClass
+  public static void beforeClass() {
+    Log4j.config("log4j-mask.xml");
+  }
 
   @Test
   public void test() {

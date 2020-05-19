@@ -1,9 +1,8 @@
 package com.github.bingoohuang.logmask.impl;
 
+import java.util.Map;
 import lombok.experimental.UtilityClass;
 import lombok.val;
-
-import java.util.Map;
 
 @UtilityClass
 public class Str {

@@ -3,16 +3,15 @@ package com.github.bingoohuang.logmask;
 import com.github.bingoohuang.logmask.encrypt.DesEncrypter;
 import com.github.bingoohuang.logmask.encrypt.Encrypter;
 import com.github.bingoohuang.logmask.encrypt.Util;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-import lombok.val;
-
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 
 @Data
 @XmlRootElement

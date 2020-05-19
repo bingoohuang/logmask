@@ -2,10 +2,9 @@ package com.github.bingoohuang.logmask.logback;
 
 import com.github.bingoohuang.logmask.Config;
 import com.github.bingoohuang.logmask.impl.Clz;
+import java.util.Map;
 import lombok.Data;
 import lombok.val;
-
-import java.util.Map;
 
 @Data
 public class Layout extends ch.qos.logback.classic.PatternLayout {

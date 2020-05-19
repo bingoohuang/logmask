@@ -144,4 +144,8 @@ Format modifier	|Logger name	|Result
 [%10.10logger]	|main.foo.foo.bar.Name	|\[o.bar.Name\]
 [%10.-10logger]	|main.foo.foo.bar.Name	|\[main.foo.f\]
 
+## google-java-format code formatter
 
+https://github.com/Cosium/git-code-format-maven-plugin
+
+`mvn git-code-format:format-code -Dgcf.globPattern="**/*"`
