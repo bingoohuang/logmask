@@ -9,8 +9,10 @@ import lombok.val;
 public class LogMask {
   public final String DEFAULT_MASK = "___";
 
+  Config config = Clz.loadXML("logmask.xml", Config.class).setup();
+
   public String mask(Object obj) {
-    return mask(Clz.loadXML("logmask.xml", Config.class).setup(), obj);
+    return mask(config, obj);
   }
 
   public String mask(Config config, Object obj) {
