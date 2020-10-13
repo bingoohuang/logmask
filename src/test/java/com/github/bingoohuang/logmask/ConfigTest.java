@@ -13,13 +13,13 @@ public class ConfigTest {
   @Test
   @SneakyThrows
   public void readXML() {
-    val config = Clz.loadXML("logmask.xml", Config.class);
+    val config = Clz.loadXML("logmask.xml", Config.class).setup();
 
     assertTrue(config.getMask().size() > 0);
 
-    assertEquals(
-        "creditCard=" + Util.des("12345678910", Util.K),
-        config.setup().mask("creditCard=12345678910"));
+    String s = "{\"creditcard\":\"12345678910\",\"ID\":\"1234\"}";
+    String des = Util.des("12345678910", Util.K);
+    assertEquals("{\"creditcard\":\"" + des + "\",\"ID\":\"***\"}", config.mask(s));
   }
 
   @Test

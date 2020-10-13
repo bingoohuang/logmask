@@ -157,52 +157,55 @@ public class Config {
     }
 
     private String keyMask(String key, String src) {
-      int start = src.indexOf(key);
+      val upperKey = key.toUpperCase();
+      val upperSrc = src.toUpperCase();
+      int start = upperSrc.indexOf(upperKey);
       if (start < 0) {
         return src;
       }
 
       val sb = new StringBuilder();
+      int keyLen = key.length();
       start = 0;
 
       do {
-        int next = src.indexOf(key, start);
+        int next = upperSrc.indexOf(upperKey, start);
         if (next < 0) {
           sb.append(src.substring(start));
           break;
         }
 
-        sb.append(src, start, next + key.length());
+        sb.append(src, start, next + keyLen);
 
         char leftChar = ' ';
         char rightChar = ' ';
         if (next > 0) {
           leftChar = src.charAt(next - 1);
         }
-        if (next + key.length() < src.length()) {
-          rightChar = src.charAt(next + key.length());
+        if (next + keyLen < src.length()) {
+          rightChar = src.charAt(next + keyLen);
         }
 
         if (!LogMask.isBoundaryChar(leftChar, rightChar)) {
-          start = next + key.length();
+          start = next + keyLen;
 
           continue;
         }
 
         // key:value or key=value
         if (isToStringKey(leftChar, rightChar)) {
-          start = processToString(key, src, sb, next, rightChar);
+          start = processToString(keyLen, src, sb, next, rightChar);
           if (start < 0) break;
           continue;
         }
 
         // JSON
-        if (isJSONKey(leftChar, rightChar)) {
+        if (isJsonKey(leftChar, rightChar)) {
           start = processJSON(key, src, sb, next);
           continue;
         }
 
-        start = next + key.length();
+        start = next + keyLen;
       } while (true);
 
       return sb.toString();
@@ -222,28 +225,27 @@ public class Config {
       return valueEnd;
     }
 
-    private int processToString(
-        String key, String src, StringBuilder sb, int next, char rightChar) {
-      sb.append(rightChar);
+    private int processToString(int keyLen, String src, StringBuilder sb, int next, char rightCh) {
+      sb.append(rightCh);
 
-      int valueEnd = src.indexOf(", ", next + key.length());
+      int valueEnd = src.indexOf(", ", next + keyLen);
       if (valueEnd < 0) {
-        valueEnd = src.indexOf(')', next + key.length());
+        valueEnd = src.indexOf(')', next + keyLen);
       }
 
       if (valueEnd > 0) {
-        String value = src.substring(next + key.length() + 1, valueEnd);
+        String value = src.substring(next + keyLen + 1, valueEnd);
         sb.append(this.maskResult(value));
         return valueEnd;
       }
 
-      String value = src.substring(next + key.length() + 1);
+      String value = src.substring(next + keyLen + 1);
       sb.append(this.maskResult(value));
 
       return -1;
     }
 
-    private boolean isJSONKey(char leftChar, char rightChar) {
+    private boolean isJsonKey(char leftChar, char rightChar) {
       return LogMask.isQuoteChar(leftChar) && LogMask.isQuoteChar(rightChar);
     }
 
