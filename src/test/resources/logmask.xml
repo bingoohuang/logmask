@@ -5,7 +5,7 @@
         <pattern><![CDATA[\b\d{12}\d{3,5}[xX]?\b]]></pattern>
 
         <!-- 指定json格式, key=value key:value形式的key，多个以空白分割 -->
-        <keys>id</keys>
+        <keys>id password</keys>
 
         <!-- mask定义脱敏后用于替换的掩码字符串 -->
         <mask>***</mask>

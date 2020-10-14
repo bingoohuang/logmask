@@ -20,6 +20,14 @@ public class ConfigTest {
     String s = "{\"creditcard\":\"12345678910\",\"ID\":\"1234\"}";
     String des = Util.des("12345678910", Util.K);
     assertEquals("{\"creditcard\":\"" + des + "\",\"ID\":\"***\"}", config.mask(s));
+
+    String m =
+        LogMask.mask(
+            config,
+            "username=1339162&password=Yinkman2015&custom%5Bimplementation%5D=commondefault&grant_type=password&scope=server");
+    assertEquals(
+        "username=1339162&password=Yin***015&custom%5Bimplementation%5D=commondefault&grant_type=password&scope=server",
+        m);
   }
 
   @Test

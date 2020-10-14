@@ -225,24 +225,28 @@ public class Config {
       return valueEnd;
     }
 
+    private static final String endChars = "& \t\r\n,)]";
+
     private int processToString(int keyLen, String src, StringBuilder sb, int next, char rightCh) {
       sb.append(rightCh);
 
-      int valueEnd = src.indexOf(", ", next + keyLen);
-      if (valueEnd < 0) {
-        valueEnd = src.indexOf(')', next + keyLen);
+      int valueEnd = -1;
+
+      for (char c : endChars.toCharArray()) {
+        valueEnd = src.indexOf(c, next + keyLen + 1);
+        if (valueEnd >= 0) {
+          break;
+        }
       }
 
-      if (valueEnd > 0) {
-        String value = src.substring(next + keyLen + 1, valueEnd);
-        sb.append(this.maskResult(value));
-        return valueEnd;
-      }
+      String value =
+          valueEnd >= 0
+              ? src.substring(next + keyLen + 1, valueEnd)
+              : src.substring(next + keyLen + 1);
 
-      String value = src.substring(next + keyLen + 1);
       sb.append(this.maskResult(value));
 
-      return -1;
+      return valueEnd;
     }
 
     private boolean isJsonKey(char leftChar, char rightChar) {
