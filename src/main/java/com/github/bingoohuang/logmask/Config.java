@@ -225,7 +225,7 @@ public class Config {
       return valueEnd;
     }
 
-    private static final String endChars = "& \t\r\n,)]";
+    private static final String endChars = "&, \t\r\n)]";
 
     private int processToString(int keyLen, String src, StringBuilder sb, int next, char rightCh) {
       sb.append(rightCh);
@@ -233,16 +233,14 @@ public class Config {
       int valueEnd = -1;
 
       for (char c : endChars.toCharArray()) {
-        valueEnd = src.indexOf(c, next + keyLen + 1);
+        valueEnd = src.indexOf(c, next + keyLen);
         if (valueEnd >= 0) {
           break;
         }
       }
 
       String value =
-          valueEnd >= 0
-              ? src.substring(next + keyLen + 1, valueEnd)
-              : src.substring(next + keyLen + 1);
+          valueEnd >= 0 ? src.substring(next + keyLen, valueEnd) : src.substring(next + keyLen);
 
       sb.append(this.maskResult(value));
 
