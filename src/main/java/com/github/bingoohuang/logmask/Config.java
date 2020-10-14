@@ -214,35 +214,34 @@ public class Config {
     private int processJSON(String key, String src, StringBuilder sb, int next) {
       int valueStart = src.indexOf(':', next + key.length());
       String keyQuote = src.substring(next + key.length(), valueStart);
-      int valueEnd = src.indexOf(keyQuote + ",", valueStart + keyQuote.length() + 1);
+      int from = valueStart + keyQuote.length() + 1;
+      int valueEnd = src.indexOf(keyQuote + ",", from);
       if (valueEnd < 0) {
-        valueEnd = src.indexOf(keyQuote + "}", valueStart + keyQuote.length() + 1);
+        valueEnd = src.indexOf(keyQuote + "}", from);
       }
 
-      String value = src.substring(valueStart + keyQuote.length() + 1, valueEnd);
-      sb.append(src, next + key.length(), valueStart + keyQuote.length() + 1);
+      String value = src.substring(from, valueEnd);
+      sb.append(src, next + key.length(), from);
       sb.append(this.maskResult(value));
       return valueEnd;
     }
 
-    private static final String endChars = "& \t\r\n,)]";
+    private static final String endChars = "&, \t\r\n)]";
 
     private int processToString(int keyLen, String src, StringBuilder sb, int next, char rightCh) {
       sb.append(rightCh);
 
       int valueEnd = -1;
 
+      int from = next + keyLen + 1;
       for (char c : endChars.toCharArray()) {
-        valueEnd = src.indexOf(c, next + keyLen + 1);
+        valueEnd = src.indexOf(c, from);
         if (valueEnd >= 0) {
           break;
         }
       }
 
-      String value =
-          valueEnd >= 0
-              ? src.substring(next + keyLen + 1, valueEnd)
-              : src.substring(next + keyLen + 1);
+      String value = valueEnd >= 0 ? src.substring(from, valueEnd) : src.substring(from);
 
       sb.append(this.maskResult(value));
 
