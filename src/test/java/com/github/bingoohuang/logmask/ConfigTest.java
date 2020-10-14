@@ -44,6 +44,12 @@ public class ConfigTest {
     assertEquals("hel###ang", mask.maskResult("hellobingoohuang"));
 
     mask = new Config.Mask();
+    mask.setKeep("3");
+    mask.setup(null);
+    assertEquals("___", mask.maskResult(""));
+    assertEquals("___", mask.maskResult(null));
+
+    mask = new Config.Mask();
     mask.setKeep("3.3.-2");
     mask.setMask("###");
     mask.setup(null);

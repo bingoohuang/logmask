@@ -257,6 +257,10 @@ public class Config {
     }
 
     public String maskResult(String s) {
+      if (s == null) {
+        s = "";
+      }
+
       if (this.encrypter != null) {
         return this.encrypter.encrypt(s);
       }

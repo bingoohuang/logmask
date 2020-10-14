@@ -3,13 +3,11 @@ package com.github.bingoohuang.logmask.encrypt;
 import java.security.Key;
 
 public class DesEncrypter extends Encrypter {
-  private Key key;
+  private Key key = Util.K;
 
   @Override
   public void setup(String option) {
-    if (option.isEmpty()) {
-      key = Util.K;
-    } else {
+    if (!option.isEmpty()) {
       key = Util.parseKey(Util.DES_ALGORITHM, option);
     }
   }
