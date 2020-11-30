@@ -1,9 +1,7 @@
 package com.github.bingoohuang.logmask;
 
 import com.github.bingoohuang.logmask.impl.Clz;
-import com.github.bingoohuang.logmask.impl.ToString;
 import lombok.experimental.UtilityClass;
-import lombok.val;
 
 @UtilityClass
 public class LogMask {
@@ -11,26 +9,16 @@ public class LogMask {
 
   Config config = Clz.loadXML("logmask.xml", Config.class).setup();
 
+  public void config(Config config) {
+    LogMask.config = config.setup();
+  }
+
   public String mask(Object obj) {
     return mask(config, obj);
   }
 
   public String mask(Config config, Object obj) {
-    if (obj == null) {
-      return null;
-    }
-
-    if (obj.getClass().isAnnotationPresent(Mask.class)) {
-      val desc = ToString.create(obj.getClass());
-      if (desc != null) {
-        desc.setBean(obj);
-        desc.setConf(config);
-
-        return desc.toString();
-      }
-    }
-
-    return mask(config, obj.toString());
+    return config.mask(obj);
   }
 
   public String mask(Config config, String src) {

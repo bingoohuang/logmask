@@ -3,15 +3,17 @@ package com.github.bingoohuang.logmask;
 import com.github.bingoohuang.logmask.encrypt.DesEncrypter;
 import com.github.bingoohuang.logmask.encrypt.Encrypter;
 import com.github.bingoohuang.logmask.encrypt.Util;
+import com.github.bingoohuang.logmask.impl.ToString;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
+import lombok.val;
+
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
-import lombok.Data;
-import lombok.extern.slf4j.Slf4j;
-import lombok.val;
 
 @Data
 @XmlRootElement
@@ -29,7 +31,19 @@ public class Config {
   }
 
   public String mask(Object obj) {
-    if (obj == null) return null;
+    if (obj == null) {
+      return null;
+    }
+
+    if (obj.getClass().isAnnotationPresent(com.github.bingoohuang.logmask.Mask.class)) {
+      val desc = ToString.create(obj.getClass());
+      if (desc != null) {
+        desc.setBean(obj);
+        desc.setConf(this);
+
+        return desc.toString();
+      }
+    }
 
     String src = obj.toString();
     for (val m : this.mask) {
