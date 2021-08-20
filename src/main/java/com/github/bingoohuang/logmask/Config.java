@@ -72,7 +72,7 @@ public class Config {
     // 正则表达式
     private String pattern;
     // JSON,toString(key=value, key:value)等形式的key列表，以空格分隔
-    private String keys;
+    private List<String> keys;
 
     // 加密替换，设置后，优先级 3
     private String encrypt;
@@ -163,10 +163,11 @@ public class Config {
 
       String dest = src;
 
-      for (val key : keys.split("\\s+")) {
-        dest = keyMask(key, dest);
+      for (val k : keys) {
+        for (val key : k.split("\\s+")) {
+          dest = keyMask(key, dest);
+        }
       }
-
       return dest;
     }
 
